@@ -1,0 +1,26 @@
+{
+    "name": "presentation-builder",
+    "description": "presentation builder",
+    "version": "1.0.0",
+    "author": "Pavel <pavel@ovchinnikov.us>",
+    "repository":{
+        "type": "git",
+        "url": "https://github.com/.org"
+    },
+    "devDependencies": {
+        "gulp": "3.9.0",
+        "gulp-clean": "0.3.1",
+        "gulp-preprocess": "^1.2.0",
+        "gulp-rename": "^1.2.0",
+        "gulp-file": "0.2.0",
+        "gulp-util": "3.0.6",
+        "gulp-imagemin": "2.3.0",
+        "gulp-watch": "4.3.5",
+        "gulp-newer": "0.5.1",
+        "gulp-batch": "1.0.5",
+        "imagemin-pngquant": "4.1.2",
+        "run-sequence": "1.1.5",
+        "mkdirp": "0.5.1",
+        "pageres": "3.0.1"
+    }
+}
