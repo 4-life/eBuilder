@@ -1,6 +1,5 @@
 /*! 
-	SCRIPTS base v1.1
-	Nestline Digital (c) 2015
+	script base v1.1.0
 */
 
 "use strict";
@@ -23,7 +22,7 @@
 			// элемент на котором срабатывает функция возврата на предыдущую страницу
 			goto_back_btn : ".goto_back",
 						
-			// тут описываем кастомные события, как общие, так и индивидуальные для каждого слайда
+			// описываем кастомные события, как общие, так и индивидуальные для каждого слайда
 			customEvents: function(){
                    
 				
@@ -308,55 +307,3 @@
 	app.init();
 	
 })();
-
-
-
-	
-// @if NUM=="vid1"  
-var cur_vid_id = 1,next_vid;
-
-$$(".forxiga_btn").on("touchend",function(e){		
-    $$("video.active")[0].pause();
-    $$("video.active")[0].load();
-    $$("video.active").removeClass("active");	
-    $$("#L"+cur_vid_id+"_FORXIGA").addClass("active");
-    $$("#L"+cur_vid_id+"_FORXIGA")[0].play();
-});
-$$(".video_plus").on("touchend",function(e){	
-    next_vid = cur_vid_id+1;
-    if(next_vid > 0 && next_vid < 7){
-        play(next_vid);
-        $$("button").attr("disabled",true);
-    }
-});                
-$$(".video_minus").on("touchend",function(e){	
-    next_vid = cur_vid_id-1;
-    if(next_vid > 0 && next_vid < 7){
-        play(next_vid);
-        $$("button").attr("disabled",true);
-    }
-});
-function play(next_vid){
-    $$("video.active")[0].pause();
-    //$("video.active")[0].load();
-    $$("#L"+cur_vid_id+"_to_L"+next_vid+"_transition")[0].load();
-    setTimeout(function(){
-      $$("video.active").removeClass("active");		
-      $$("#L"+cur_vid_id+"_to_L"+next_vid+"_transition")[0].play();
-      $$("#L"+cur_vid_id+"_to_L"+next_vid+"_transition").addClass("active");
-    },1000);
-}
-function videoEnded(){
-      //$("#L"+cur_vid_id+"_to_L"+next_vid+"_transition")[0].pause();
-      //$("#L"+cur_vid_id+"_to_L"+next_vid+"_transition")[0].load();
-    $$("video.active")[0].pause();
-    $$("#L"+next_vid)[0].load();
-    setTimeout(function(){
-      $$("video.active").removeClass("active");
-      $$("#L"+next_vid).addClass("active");
-      $$("#L"+next_vid)[0].play();
-      cur_vid_id = next_vid;	
-      $$("button").removeAttr("disabled");		
-    },1000);
-};                
-// @endif 

@@ -1,4 +1,5 @@
 # eBuilder
 Presentation builder for e-Detailing
 
-using ```gulp```
+```gulp``` - build the app
+```gulp --clean``` - clear working directory, and build the app

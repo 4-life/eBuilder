@@ -1,13 +1,18 @@
 'use strict';
 
+/*!
+
+*/
+
+
 module.exports = {
     sourceDir: '_source',
 	presentation: {
-        lang:      "RU",
-		brand:     "Infonova",
-		nl_PID:    "brandPID",
-        presName:  "P",
-		slideName: "S"
+        lang:          "RU",
+		brand:         "brand",
+		nl_PID:        "nl_PID",
+        presentPrefix: "P",
+		slidePrefix:   "S"
 	},
 	slides: [
 		{num: 1},

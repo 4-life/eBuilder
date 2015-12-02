@@ -1,17 +1,19 @@
 'use strict';
 
-let path = require('path');
+let path = require('path'),
+    mkdirp = require('mkdirp'),
+    fs = require('fs');
 
 var functions = {
     
     getCurNameSlide: function(n){
         var p = global.config.presentation;
-        return p.slideName + n + "_" + p.nl_PID + "_" + p.brand + "_" + p.lang;  
+        return p.slidePrefix + n + "_" + p.nl_PID + "_" + p.brand + "_" + p.lang;  
     },
     
     getCurNamePresentation: function(n){
         var p = global.config.presentation;
-        return p.presName + n + "_" + p.nl_PID + "_" + p.brand + "_" + p.lang;  
+        return p.presentPrefix + n + "_" + p.nl_PID + "_" + p.brand + "_" + p.lang;  
     },
     
     getCurPresentation: function(s){
@@ -87,20 +89,56 @@ var functions = {
     },
     
 	referenceData: [
-		{brand: 'byetta',     groups: '[RU_KOB],[RU_Brand_Team]', detailGroup: 'Diabet_RU'},
-		{brand: 'komboglyze', groups: '[RU_KOB],[RU_Brand_Team]', detailGroup: 'Diabet_RU'},
-		{brand: 'onglyza',    groups: '[RU_KOB],[RU_Brand_Team]', detailGroup: 'Diabet_RU'},
+		{brand: 'byetta',     groups: '[RU_KOB],[RU_Brand_Team]',     detailGroup: 'Diabet_RU'},
+		{brand: 'komboglyze', groups: '[RU_KOB],[RU_Brand_Team]',     detailGroup: 'Diabet_RU'},
+		{brand: 'onglyza',    groups: '[RU_KOB],[RU_Brand_Team]',     detailGroup: 'Diabet_RU'},
 		{brand: 'forxiga',    groups: '[RU_FORXIGA],[RU_Brand_Team]', detailGroup: 'Diabet_RU'},
-		{brand: 'pulmicort',  groups: '[RU_RIA],[RU_Brand_Team]', detailGroup: 'RIA_RU'},
-		{brand: 'symbicort',  groups: '[RU_RIA],[RU_Brand_Team]', detailGroup: 'RIA_RU'},
-		{brand: 'iressa',     groups: '[RU_ONCO],[RU_Brand_Team]', detailGroup: 'Onco_RU'},
-		{brand: 'zoladex',    groups: '[RU_ONCO],[RU_Brand_Team]', detailGroup: 'Onco_RU'},
-		{brand: 'faslodex',   groups: '[RU_ONCO],[RU_Brand_Team]', detailGroup: 'Onco_RU'},
+		{brand: 'pulmicort',  groups: '[RU_RIA],[RU_Brand_Team]',     detailGroup: 'RIA_RU'},
+		{brand: 'symbicort',  groups: '[RU_RIA],[RU_Brand_Team]',     detailGroup: 'RIA_RU'},
+		{brand: 'iressa',     groups: '[RU_ONCO],[RU_Brand_Team]',    detailGroup: 'Onco_RU'},
+		{brand: 'zoladex',    groups: '[RU_ONCO],[RU_Brand_Team]',    detailGroup: 'Onco_RU'},
+		{brand: 'faslodex',   groups: '[RU_ONCO],[RU_Brand_Team]',    detailGroup: 'Onco_RU'},
 		{brand: 'zinforo',    groups: '[RU_HOSPITAL],[RU_HOSPITAL_CNS],[RU_Brand_Team]', detailGroup: 'Infection_RU'},
-		{brand: 'seroquel',   groups: '[RU_CNS],[RU_HOSPITAL_CNS],[RU_Brand_Team]', detailGroup: 'CNS_RU'},
-		{brand: 'nexium',     groups: '[RU_GI_PHARMACY],[RU_GI],[RU_Brand_Team]', detailGroup: 'GI_RU'},
+		{brand: 'seroquel',   groups: '[RU_CNS],[RU_HOSPITAL_CNS],[RU_Brand_Team]',      detailGroup: 'CNS_RU'},
+		{brand: 'nexium',     groups: '[RU_GI_PHARMACY],[RU_GI],[RU_Brand_Team]',        detailGroup: 'GI_RU'},
 		{brand: 'infonova',   groups: '[RU_CV_STA],[RU_GPD_STA],[RU_PHARMACY_KAS],[RU_Brand_Team]', detailGroup: 'RIA_RU'}
-	],   
+	],
+    
+    createEmptyImgFolders: function(){
+        
+        let assetsPath = path.join(global.config.sourceDir, '_assets');
+        fs.exists(assetsPath, function(exists) {
+            if (!exists) {
+                mkdirp(assetsPath, function (err) {
+                    if (err) console.error(err)
+                    else console.log('Creating empty assets dir in ' + assetsPath);
+                });
+            }
+        });
+        
+        let filesPath = path.join(global.config.sourceDir, '_files');
+        fs.exists(filesPath, function(exists) {
+            if (!exists) {
+                mkdirp(filesPath, function (err) {
+                    if (err) console.error(err)
+                    else console.log('Creating empty files dir in ' + filesPath);
+                });
+            }
+        });
+        
+        config.slides.map(function(currentSlide){
+            if(currentSlide.isFile) return false;
+            let sourcePath = path.join(global.config.sourceDir, '_images', currentSlide.num+'');
+            fs.exists(sourcePath, function(exists) {
+                if (!exists) {
+                    mkdirp(sourcePath, function (err) {
+                        if (err) console.error(err)
+                        else console.log('Creating empty images dir in ' + sourcePath);
+                    });
+                }
+            });
+        });        
+    },
     
     projectRoot: process.cwd()
 }

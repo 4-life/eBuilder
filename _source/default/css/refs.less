@@ -1,0 +1,206 @@
+/*! 
+	style base v1.0.1
+*/
+
+
+/************ COMMON STYLES *************/
+
+html {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+body {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    background: #ccc;
+}
+section {
+    position: absolute;
+    width: 1024px;
+    height: 768px;
+    overflow: hidden;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+.content {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    padding: 1px;
+    box-sizing: border-box;
+}
+* :not(input) {
+    -webkit-touch-callout: none !important;
+    -webkit-user-select: none !important;
+    -webkit-transform: translate3d(0, 0, 0);
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+*:focus {
+    outline: none;
+    outline: 0;
+}
+
+/************ VIDEO *************/
+.videoEmbed{
+	position: absolute;
+	width: 1024px;
+	height: 768px;
+	top: 0;
+	left: 0;
+	visibility: hidden;
+	opacity: 0;
+	-webkit-transition: all .5s ease-in-out;
+	background: rgba(0,0,0,.7);
+	z-index: 999999;
+    
+    &.active{
+	   visibility: visible;
+	   opacity: 1;
+    }
+    
+    video{
+        position: absolute;
+        bottom: 50px;
+        left: 0;
+        display: none;
+    }
+}
+.videoEmbed_play {
+    position: absolute;
+    display: block;
+    cursor: pointer;
+    z-index: 99;
+    margin: 0;
+    width: 310px;
+    height: 60px;
+}
+.videoEmbed_close{
+	color: #fff;
+	text-align: right;
+	font-size: 12pt;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: 99999;
+    
+    span{
+        padding:  10px;
+        font-size:  26pt;
+        cursor: pointer;
+    }
+}
+
+/********** POPUP *********/
+.popup {
+    position: relative;
+    z-index: 9999;
+    
+    & .popup_content{
+        position: absolute;
+        width: 1024px;
+        height: 768px;
+        visibility: hidden;
+        opacity: 0;
+        top: 0;
+        left: 0;
+        z-index: 9999;
+        background: url("../img/popup.png") no-repeat;
+        background-size: contain;
+        -webkit-transition: all .5s ease-in-out;
+    }
+    
+    &.active .popup_content{
+        visibility: visible;
+        opacity: 1;
+    }
+}
+.popup_btn {
+    position: absolute;
+    display: block;
+    width: 120px;
+    height: 50px;
+    top: 720px;
+    left: 970px;
+}
+.popup_close {
+	width: 50px;
+	height: 50px;
+	display: block;
+	position: absolute;
+    top: 80px;
+    right: 40px; 
+	z-index: 9;
+}
+
+/*************** NAVIGATION ***************/
+nav.generateMenu{
+	position: absolute;
+	padding: 0;
+	left: 0;
+	bottom: -100px;
+	width: 100%;
+	z-index: 999;	
+	height: 101px;
+}
+nav .generateButton{
+    position: relative;
+    height: 85px;
+    margin-top: 16px;
+    width: 115px;
+    display: inline-block;
+    vertical-align: top;
+    font-size: 0;
+}
+.generateButton._goto_1{
+    margin-left: 55px;
+}
+nav.generateMenu .open_menu{
+	position: absolute;
+	width: 42px;	
+	height: 28px;
+	display: block;
+	cursor: pointer;	
+	margin: auto;
+}
+
+/************ BREEDCRUMBS *************/
+.bc {
+	display: block;
+	position: absolute;
+	top: 10px;
+	right: 44px;
+    
+    & .bc-column {
+	   width: 12px;
+	   display: block;
+	   margin: 0px 2px;
+	   float: left;
+        
+       & .bc-item {
+	       width: 12px;
+	       height: 6px;
+	       display: block;
+	       margin: 3px 0;
+	       background-color: #806b9d;
+	       border-radius: 30px;
+           
+           &.active {
+	           background-color: #f35;
+           }
+       }
+    }
+}
+

@@ -25,9 +25,8 @@ module.exports = function () {
     },0);
     
     gulp.src(config.tempDir)
-        .pipe(file("slides_list.txt", str))
-        .pipe(gulp.dest(config.tempDir));
+        .pipe(file('slides_list.txt', str));
     
-    gutil.log(gutil.colors.magenta('slides list file create'));
+    gutil.log(gutil.colors.magenta('slides list file create in ' + config.tempDir + 'slides_list.txt'));
     gutil.log(gutil.colors.magenta('Preparing end ') + gutil.colors.green('successfuly!'))
 };

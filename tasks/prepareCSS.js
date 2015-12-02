@@ -2,10 +2,11 @@
 
 const config = global.config,
       gulp = require('gulp'),
+      less = require('gulp-less'),
       newer = require('gulp-newer');
 
 module.exports = function () {
-    return gulp.src( config.sourceDir + 'css/**/*.css' )
-        .pipe(newer( config.tempDir + 'css/**/*.css' ))
+    return gulp.src( config.sourceDir + 'css/base.less' )
+        .pipe(less())
         .pipe(gulp.dest( config.tempDir + '/css' ));
 };
