@@ -24,20 +24,9 @@ gulp.task('prepare', () => {
         global.config.tempDir = path.join('_build', "._temp_" + functions.getCurNamePresentation(""), '/');
         global.config.sourceDir = path.join(global.config.sourceDir, '/');
         
-        if(gutil.env.clean) runSequence('clean');
-        
-        fs.exists(global.config.sourceDir, (exists) => {
-            
-            if (!exists) {
-                gutil.log('source dir ' + gutil.colors.red(global.config.sourceDir) + ' not found. Using default folder');
-                global.config.sourceDir = path.join('_source', 'default', '/');
-            }
-            
-            functions.createEmptyImgFolders();
-            
-            resolve("next");
-            
-        });
+        if(gutil.env.clean) runSequence('clean');        
+        functions.createEmptyImgFolders();            
+        resolve("next");
         
     }).then(
         next => {            
