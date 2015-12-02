@@ -8,7 +8,7 @@ const gulp = require('gulp'),
       batch = require('gulp-batch'),
       path = require('path'),
       functions = require('./config/functions'),
-      config = require('./config/default');
+      config = require('./_source/default/config');
 
 global.config = config;
 
@@ -22,7 +22,7 @@ gulp.task('prepare', () => {
         global.config.LINKS = "links:" + JSON.stringify( functions.setPresentLinks() ) + ",";
         global.config.readyBDir = path.join('_build', functions.getCurNamePresentation(""), '/');
         global.config.tempDir = path.join('_build', "._temp_" + functions.getCurNamePresentation(""), '/');
-        global.config.sourceDir = path.join('_source', global.config.sourceDir, '/');
+        global.config.sourceDir = path.join(global.config.sourceDir, '/');
         
         if(gutil.env.clean) runSequence('clean');
         

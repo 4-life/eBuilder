@@ -16,7 +16,7 @@ module.exports = function () {
           
         if(currentSlide.isFile){
             
-            gulp.src('preview.jpg')
+            gulp.src('./config/preview.jpg')
                 .pipe(rename(folderName+'/'+folderName+'-thumb.jpg'))
                 .pipe(gulp.dest(config.readyBDir));
             gutil.log('Thumb preview for file ' + gutil.colors.blue(folderName) + ' created!');
