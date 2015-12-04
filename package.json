@@ -1,7 +1,7 @@
 {
     "name": "eBuilder",
     "description": "Presentation builder for e-Detailing",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "author": "Pavel <pavel@ovchinnikov.us>",
     "repository":{
         "type": "git",

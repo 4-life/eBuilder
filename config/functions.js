@@ -17,8 +17,8 @@ var functions = {
     },
     
     getCurPresentation: function(s){
-        for(var i in global.config.template.settings.map){
-            var obj = global.config.template.settings.map[i].slides;
+        for(var i in global.config.settings.map){
+            var obj = global.config.settings.map[i].slides;
             if(obj.indexOf(s) >= 0){
                 return functions.getCurNamePresentation(i);
             }
@@ -27,7 +27,7 @@ var functions = {
     
     setPresentSettings: function(){
         var obj = {};
-        var p = global.config.template.settings;
+        var p = global.config.settings;
 
         for (var e in p.map) {
             obj[ functions.getCurNamePresentation(e) ] = functions.getObjData(p.map[e]);
@@ -37,7 +37,7 @@ var functions = {
     
     setPresentLinks: function(){
         var newLinks = [],
-            p = global.config.template.settings,
+            p = global.config.settings,
             s = global.config.slides;
 
         for (var e in p.links) {

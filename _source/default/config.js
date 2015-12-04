@@ -1,10 +1,5 @@
 'use strict';
 
-/*!
-
-*/
-
-
 module.exports = {
     sourceDir: __dirname,
 	presentation: {
@@ -21,19 +16,17 @@ module.exports = {
 		//{num: 4, assets: [], isFile: false, copy: 1},
         
 	],
-	template: {
-		settings: { 
-			// КАРТА ПРЕЗЕНТАЦИИ. "p_pres" и "p_slide" для вертикальных визитов
-			map : {
-				"1":{
-					"slides": [1,2,3,4,5]
-				}
-			}, 	
-			
-			// ПРИВЯЗКА ВСЕХ ССЫЛОК К КЛАССАМ. class - классы, к которым цепляются переходы ////////////////////////	
-			links : [
-			]
-			
-		}
-	}
+    settings: { 
+        // карта презентации. Для вертикальных визитов необходимо добавить свойства "p_pres" и "p_slide" 
+        map : {
+            "1":{
+                "slides": [1,2,3,4,5]
+            }
+        },
+
+        // список ссылок на слайды при клике на классы
+        links : [
+            //{"class":"className","slideTo":"slide","presentTo":"present"}
+        ]
+    }
 }

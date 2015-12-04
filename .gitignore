@@ -7,3 +7,5 @@ node_modules/**
 cache/
 .*
 !.gitignore
+_source/**
+!_source/default
