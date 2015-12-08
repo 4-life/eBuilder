@@ -18,7 +18,7 @@ gulp.task('prepare', () => {
         gutil.log(gutil.colors.cyan('Start preparing...'));        
         global.config.MAP = "map:" + JSON.stringify( functions.setPresentSettings() ) + ",";
         global.config.LINKS = "links:" + JSON.stringify( functions.setPresentLinks() ) + ",";
-        global.config.readyBDir = path.join('_build', functions.getCurNamePresentation(""), '/');
+        global.config.readyBDir = path.join('_build', functions.getCurNamePresentation(Object.keys(global.config.settings.map)[0]), '/');
         global.config.tempDir = path.join('_build', "._temp_" + functions.getCurNamePresentation(""), '/');
         global.config.sourceDir = path.join(global.config.sourceDir, '/');        
         if(gutil.env.clean) runSequence('clean');        
