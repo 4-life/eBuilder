@@ -127,7 +127,7 @@ var functions = {
         });
         
         config.slides.map(function(currentSlide){
-            if(currentSlide.isFile) return false;
+            if(currentSlide.isFile || currentSlide.copy) return false;
             let sourcePath = path.join(global.config.sourceDir, '_images', currentSlide.num+'');
             fs.exists(sourcePath, function(exists) {
                 if (!exists) {

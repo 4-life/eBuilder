@@ -24,7 +24,7 @@ module.exports = {
             }
         },
 
-        // список ссылок на слайды при клике на классы
+        // список ссылок на слайды при клике на "class"
         links : [
             //{"class":"className","slideTo":"slide","presentTo":"present"}
         ]

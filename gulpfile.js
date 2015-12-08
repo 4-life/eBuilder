@@ -40,7 +40,7 @@ gulp.task('prepare', () => {
                 runSequence('prepareCSS', 'buildCSS', done);
             }));
 
-            watch(config.sourceDir + '*.jade', batch(function (events, done) {
+            watch(config.sourceDir + '*.{html,jade}', batch(function (events, done) {
                 runSequence('prepareHTML', 'buildHTML', done);
             }));
 
