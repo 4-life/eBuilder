@@ -8,7 +8,9 @@ const gulp = require('gulp'),
       batch = require('gulp-batch'),
       path = require('path'),
       functions = require('./config/functions'),
-      config = require('./_source/default/config');
+      config = require('./_source/az_det_symbicort_1215/config');
+
+require('events').EventEmitter.prototype._maxListeners = 20;
 
 global.config = config;
 

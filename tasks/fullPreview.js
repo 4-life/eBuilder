@@ -33,8 +33,6 @@ module.exports = function () {
                         .dest(path.join(config.readyBDir, folderName))
                         .run()
                         .then(() => gutil.log('Full thumb for ' + gutil.colors.green(folderName) + ' created!'));
-                }else{
-                    gutil.log('Full thumb for ' + gutil.colors.green(folderName) + ' already existing');
                 }
             });
         }

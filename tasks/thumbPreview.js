@@ -13,7 +13,7 @@ module.exports = function () {
     return config.slides.reduce(function( curName, currentSlide ){
         currentSlide.copy ? curName = currentSlide.copy : curName = currentSlide.num;
         let folderName = functions.getCurNameSlide( currentSlide.num );
-          
+        
         if(currentSlide.isFile){
             
             gulp.src('./config/preview.jpg')
@@ -33,8 +33,6 @@ module.exports = function () {
                         .dest(path.join(config.readyBDir, folderName))
                         .run()
                         .then(() => gutil.log('Thumb preview for ' + gutil.colors.green(folderName) + ' created!'));
-                }else{
-                    gutil.log('Thumb preview for ' + gutil.colors.green(folderName) + ' already existing');
                 }
             });       
 
