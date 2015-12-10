@@ -14,6 +14,7 @@ module.exports = function () {
             .pipe(preprocess({
                 context: {
                     NUM: curName,
+                    ID: currentSlide.num,
                     MAP: config.MAP, 
                     LINKS: config.LINKS
                 }

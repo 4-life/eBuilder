@@ -18,7 +18,8 @@ module.exports = function () {
             return gulp.src( config.tempDir + 'index.html' )
                 .pipe(preprocess({
                     context: {
-                        NUM: curName
+                        NUM: curName,
+                        ID: currentSlide.num
                     }
                 }))
                 .pipe(rename( folderName + '/' + folderName + '.html' ))

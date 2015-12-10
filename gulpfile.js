@@ -42,7 +42,7 @@ gulp.task('prepare', () => {
                 runSequence('prepareCSS', 'buildCSS', done);
             }));
 
-            watch(config.sourceDir + '*.{html,jade}', batch(function (events, done) {
+            watch([config.sourceDir + '*.jade', config.sourceDir + '*.html'], batch(function (events, done) {
                 runSequence('prepareHTML', 'buildHTML', done);
             }));
 
@@ -50,12 +50,13 @@ gulp.task('prepare', () => {
                 runSequence('prepareJS', 'buildJS', done);
             }));
 
-            watch(config.sourceDir + 'js/**/*', batch(function (events, done) {
-                runSequence('prepareLibJS', 'buildLibJS', done);
-            }));
-            watch(config.sourceDir + 'assets/**/*', batch(function (events, done) {
-                runSequence('prepareAssets', 'buildAssets', done);
-            }));
+            //watch(config.sourceDir + 'js/**/*', batch(function (events, done) {
+            //    runSequence('prepareLibJS', 'buildLibJS', done);
+            //}));
+            
+            //watch(config.sourceDir + 'assets/**/*', batch(function (events, done) {
+            //    runSequence('prepareAssets', 'buildAssets', done);
+            //}));
 
             runSequence('prepareImgCommon', 'buildImgCommon', 'prepareImgCustom', 'buildImgCustom', 'prepareCSS', 'buildCSS', 'prepareHTML', 'buildHTML', 'prepareJS', 'buildJS', 'prepareLibJS', 'buildLibJS', 'prepareAssets', 'buildAssets', 'fullPreview', 'thumbPreview', 'slidesList');
             

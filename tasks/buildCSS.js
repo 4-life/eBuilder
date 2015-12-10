@@ -13,7 +13,8 @@ module.exports = function () {
         return gulp.src( config.tempDir + 'css/**/*')
             .pipe(preprocess({
                 context: {
-                    NUM: curName
+                    NUM: curName,
+                    ID: currentSlide.num
                 }
             }))
             .pipe(gulp.dest( config.readyBDir + functions.getCurNameSlide( currentSlide.num ) + '/css/'));
