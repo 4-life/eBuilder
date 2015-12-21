@@ -13,6 +13,7 @@ var functions = {
     
     getCurNamePresentation: function(n){
         var p = global.config.presentation;
+        if(!n) n = Object.keys(global.config.settings.map)[0];
         return p.presentPrefix + n + "_" + p.nl_PID + "_" + p.brand + "_" + p.lang;  
     },
     
@@ -142,6 +143,11 @@ var functions = {
     
     projectRoot: process.cwd()
 }
-
+       
+global.config.MAP = "map:" + JSON.stringify( functions.setPresentSettings() ) + ",";
+global.config.LINKS = "links:" + JSON.stringify( functions.setPresentLinks() ) + ",";
+global.config.readyBDir = path.join('_build', functions.getCurNamePresentation(), '/');
+global.config.tempDir = path.join('_build', "._temp_" + functions.getCurNamePresentation(""), '/');
+global.config.sourceDir = path.join(global.config.sourceDir, '/');
 
 module.exports = functions;

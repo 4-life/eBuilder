@@ -7,28 +7,27 @@ const gulp = require('gulp'),
       watch = require('gulp-watch'),
       batch = require('gulp-batch'),
       path = require('path'),
-      functions = require('./config/functions'),
-      config = require('./_source/az_det_symbicort_1215/config');
+      config = global.config = require('./_source/az_det_zinforo_1215/config'),
+      functions = require('./config/functions');
 
-require('events').EventEmitter.prototype._maxListeners = 20;
-
-global.config = config;
+process.setMaxListeners(0); 
 
 gulp.task('prepare', () => {
     
     let prepare = new Promise((resolve, reject) => {
-        gutil.log(gutil.colors.cyan('Start preparing...'));        
-        global.config.MAP = "map:" + JSON.stringify( functions.setPresentSettings() ) + ",";
-        global.config.LINKS = "links:" + JSON.stringify( functions.setPresentLinks() ) + ",";
-        global.config.readyBDir = path.join('_build', functions.getCurNamePresentation(Object.keys(global.config.settings.map)[0]), '/');
-        global.config.tempDir = path.join('_build', "._temp_" + functions.getCurNamePresentation(""), '/');
-        global.config.sourceDir = path.join(global.config.sourceDir, '/');        
-        if(gutil.env.clean) runSequence('clean');        
-        functions.createEmptyImgFolders();            
-        resolve("next");        
+        
+        functions.createEmptyImgFolders();       
+        
+        if(gutil.env.clean){
+            gutil.log(gutil.colors.cyan('Start preparing with clean...'));
+            runSequence('clean', 'prepareImgCommon', 'buildImgCommon', 'prepareImgCustom', 'buildImgCustom', 'prepareCSS', 'buildCSS', 'prepareHTML', 'buildHTML', 'prepareJS', 'buildJS', 'prepareLibJS', 'buildLibJS', 'prepareAssets', 'buildAssets', 'slidesList', function(){resolve()});
+        }else{
+            gutil.log(gutil.colors.cyan('Start preparing...'));
+            runSequence('prepareImgCommon', 'buildImgCommon', 'prepareImgCustom', 'buildImgCustom', 'prepareCSS', 'buildCSS', 'prepareHTML', 'buildHTML', 'prepareJS', 'buildJS', 'prepareLibJS', 'buildLibJS', 'prepareAssets', 'buildAssets', 'slidesList', function(){resolve()});
+        }
+        
     }).then(
-        next => {            
-            gutil.log(gutil.colors.blue('watchers on work!'));
+        prepare => {
             
             watch(config.sourceDir + 'img/**/*', batch(function (events, done) {
                 runSequence('prepareImgCommon', 'buildImgCommon', done);
@@ -57,14 +56,14 @@ gulp.task('prepare', () => {
             //watch(config.sourceDir + 'assets/**/*', batch(function (events, done) {
             //    runSequence('prepareAssets', 'buildAssets', done);
             //}));
-
-            runSequence('prepareImgCommon', 'buildImgCommon', 'prepareImgCustom', 'buildImgCustom', 'prepareCSS', 'buildCSS', 'prepareHTML', 'buildHTML', 'prepareJS', 'buildJS', 'prepareLibJS', 'buildLibJS', 'prepareAssets', 'buildAssets', 'fullPreview', 'thumbPreview', 'slidesList');
             
+            gutil.log(gutil.colors.blue('watchers on work!')); 
         },
         error => {
             gutil.log('Rejected: ' + gutil.colors.red(error));
         }
-    );
+    );    
+    
 });
 
 gulp.task('prepareImgCommon', require('./tasks/prepareImgCommon'));

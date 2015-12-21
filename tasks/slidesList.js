@@ -12,7 +12,7 @@ module.exports = function () {
         str = '';
     
 	str = maskPres
-        .replace('[currentPresen]', functions.getCurNamePresentation(''))
+        .replace('[currentPresen]', functions.getCurNamePresentation())
         .replace('[Groups]', functions.getGroups(config.presentation.brand)||'')
         .replace('[detailGroup]', functions.getDetailGroup(config.presentation.brand)||'');
     
@@ -21,11 +21,12 @@ module.exports = function () {
         str += maskSlide
             .replace('[currentSlide]', functions.getCurNameSlide(currentSlide.num))
             .replace('[order]', index+1)
-            .replace('[external]', functions.getCurNamePresentation('') + '__' + functions.getCurNameSlide(currentSlide.num))
+            .replace('[external]', functions.getCurNamePresentation() + '__' + functions.getCurNameSlide(currentSlide.num))
     },0);
     
     gulp.src(config.tempDir)
-        .pipe(file('slides_list.txt', str));
+        .pipe(file('slides_list.txt', str))
+        .pipe(gulp.dest(config.tempDir));
     
     gutil.log(gutil.colors.magenta('slides list file create in ' + config.tempDir + 'slides_list.txt'));
     gutil.log(gutil.colors.magenta('Preparing end ') + gutil.colors.green('successfully!'))

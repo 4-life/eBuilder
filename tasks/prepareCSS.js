@@ -7,6 +7,7 @@ const config = global.config,
 
 module.exports = function () {
     return gulp.src( config.sourceDir + 'css/base.less' )
+        .pipe(newer( config.tempDir + 'base.css' ))
         .pipe(less())
         .pipe(gulp.dest( config.tempDir + '/css' ));
 };

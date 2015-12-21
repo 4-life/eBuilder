@@ -26,15 +26,15 @@ module.exports = function () {
             let html = path.join(config.readyBDir, folderName, folderName + '.html'),
                 existImg = path.join(config.readyBDir, folderName, folderName + '-full.jpg');
             
-            fs.exists(existImg, function(exists) {
-                if (!exists) {
+            //fs.exists(existImg, function(exists) {
+                //if (!exists) {
                     let pageres = new Pageres({delay: 0, filename: folderName+'-full', format: 'jpg'})
                         .src(html, ['1024x768'])
                         .dest(path.join(config.readyBDir, folderName))
                         .run()
                         .then(() => gutil.log('Full thumb for ' + gutil.colors.green(folderName) + ' created!'));
-                }
-            });
+                //}
+            //});
         }
     },0);    
 };
