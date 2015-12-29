@@ -7,10 +7,10 @@ const gulp = require('gulp'),
       watch = require('gulp-watch'),
       batch = require('gulp-batch'),
       path = require('path'),
-      config = global.config = require('./_source/az_det_zinforo_1215/config'),
+      config = global.config = require(process.env.INIT_CWD + '/config'),
       functions = require('./config/functions');
 
-process.setMaxListeners(0); 
+process.setMaxListeners(0);
 
 gulp.task('prepare', () => {
     
@@ -19,10 +19,10 @@ gulp.task('prepare', () => {
         functions.createEmptyImgFolders();       
         
         if(gutil.env.clean){
-            gutil.log(gutil.colors.cyan('Start preparing with clean...'));
+            gutil.log(gutil.colors.magenta('Start preparing with clean ' + gutil.colors.blue(config.presentation.brand + '_' + config.presentation.nl_PID) + ' presentation'));
             runSequence('clean', 'prepareImgCommon', 'buildImgCommon', 'prepareImgCustom', 'buildImgCustom', 'prepareCSS', 'buildCSS', 'prepareHTML', 'buildHTML', 'prepareJS', 'buildJS', 'prepareLibJS', 'buildLibJS', 'prepareAssets', 'buildAssets', 'slidesList', function(){resolve()});
         }else{
-            gutil.log(gutil.colors.cyan('Start preparing...'));
+            gutil.log(gutil.colors.magenta('Start preparing ' + gutil.colors.blue(config.presentation.brand + '_' + config.presentation.nl_PID) + ' presentation'));
             runSequence('prepareImgCommon', 'buildImgCommon', 'prepareImgCustom', 'buildImgCustom', 'prepareCSS', 'buildCSS', 'prepareHTML', 'buildHTML', 'prepareJS', 'buildJS', 'prepareLibJS', 'buildLibJS', 'prepareAssets', 'buildAssets', 'slidesList', function(){resolve()});
         }
         
@@ -80,8 +80,8 @@ gulp.task('prepareLibJS',     require('./tasks/prepareLibJS'));
 gulp.task('buildLibJS',       require('./tasks/buildLibJS'));
 gulp.task('prepareAssets',    require('./tasks/prepareAssets'));
 gulp.task('buildAssets',      require('./tasks/buildAssets'));
-gulp.task('fullPreview',      require('./tasks/fullPreview'));
-gulp.task('thumbPreview',     require('./tasks/thumbPreview'));
+gulp.task('pfull',            require('./tasks/fullPreview'));
+gulp.task('pthumb',           require('./tasks/thumbPreview'));
 gulp.task('slidesList',       require('./tasks/slidesList'));
 gulp.task('clean',            require('./tasks/clean'));
 
