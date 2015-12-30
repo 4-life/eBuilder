@@ -17,7 +17,7 @@ gulp.task('prepare', () => {
     let prepare = new Promise((resolve, reject) => {
         
         functions.createEmptyImgFolders();       
-        
+
         if(gutil.env.clean){
             gutil.log(gutil.colors.magenta('Start preparing with clean ' + gutil.colors.blue(config.presentation.brand + '_' + config.presentation.nl_PID) + ' presentation'));
             runSequence('clean', 'prepareImgCommon', 'buildImgCommon', 'prepareImgCustom', 'buildImgCustom', 'prepareCSS', 'buildCSS', 'prepareHTML', 'buildHTML', 'prepareJS', 'buildJS', 'prepareLibJS', 'buildLibJS', 'prepareAssets', 'buildAssets', 'slidesList', function(){resolve()});
@@ -27,43 +27,50 @@ gulp.task('prepare', () => {
         }
         
     }).then(
-        prepare => {
-            
-            watch(config.sourceDir + 'img/**/*', batch(function (events, done) {
-                runSequence('prepareImgCommon', 'buildImgCommon', done);
-            }));
-
-            watch(config.sourceDir + '_images/**/*', batch(function (events, done) {
-                runSequence('prepareImgCustom', 'buildImgCustom', done);
-            }));
-
-            watch(config.sourceDir + 'css/**/*', batch(function (events, done) {
-                runSequence('prepareCSS', 'buildCSS', done);
-            }));
-
-            watch([config.sourceDir + '*.jade', config.sourceDir + '*.html'], batch(function (events, done) {
-                runSequence('prepareHTML', 'buildHTML', done);
-            }));
-
-            watch(config.sourceDir + 'app.js', batch(function (events, done) {
-                runSequence('prepareJS', 'buildJS', done);
-            }));
-
-            //watch(config.sourceDir + 'js/**/*', batch(function (events, done) {
-            //    runSequence('prepareLibJS', 'buildLibJS', done);
-            //}));
-            
-            //watch(config.sourceDir + 'assets/**/*', batch(function (events, done) {
-            //    runSequence('prepareAssets', 'buildAssets', done);
-            //}));
-            
-            gutil.log(gutil.colors.blue('watchers on work!')); 
+        prepare => {            
+            runSequence('setWatchers');
         },
         error => {
             gutil.log('Rejected: ' + gutil.colors.red(error));
         }
     );    
+});
+
+gulp.task('setWatchers', () => {
     
+    watch(config.sourceDir + 'img/**/*', batch(function (events, done) {
+        runSequence('prepareImgCommon', 'buildImgCommon', done);
+    }));
+
+    watch(config.sourceDir + '_images/**/*', batch(function (events, done) {
+        runSequence('prepareImgCustom', 'buildImgCustom', done);
+    }));
+
+    watch(config.sourceDir + 'css/**/*', batch(function (events, done) {
+        runSequence('prepareCSS', 'buildCSS', done);
+    }));
+
+    watch([config.sourceDir + '*.jade', config.sourceDir + '*.html'], batch(function (events, done) {
+        runSequence('prepareHTML', 'buildHTML', done);
+    }));
+
+    watch(config.sourceDir + 'app.js', batch(function (events, done) {
+        runSequence('prepareJS', 'buildJS', done);
+    }));
+
+    watch(config.sourceDir + 'js/**/*', batch(function (events, done) {
+        runSequence('prepareLibJS', 'buildLibJS', done);
+    }));
+
+    watch(config.sourceDir + 'assets/**/*', batch(function (events, done) {
+        runSequence('prepareAssets', 'buildAssets', done);
+    }));
+    
+    watch(config.sourceDir + 'config.js', batch(function (events, done) {
+        runSequence('prepare');
+    }));
+
+    gutil.log(gutil.colors.blue('watchers on work!'));
 });
 
 gulp.task('prepareImgCommon', require('./tasks/prepareImgCommon'));

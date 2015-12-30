@@ -21,21 +21,13 @@ module.exports = function () {
                 .pipe(gulp.dest(config.readyBDir));
             gutil.log('Thumb preview for file ' + gutil.colors.blue(folderName) + ' created!');
             
-        }else{
-        
+        }else{        
             let html = path.join(config.readyBDir, folderName, folderName + '.html'),
-                existImg = path.join(config.readyBDir, folderName, folderName + '-thumb.jpg');
-            
-            //fs.exists(existImg, function(exists) {
-                //if (!exists) {
-                    let pageres = new Pageres({delay: 0, filename: folderName+'-thumb', format: 'jpg', scale: 0.2})
-                        .src(html, ['1024x768'])
-                        .dest(path.join(config.readyBDir, folderName))
-                        .run()
-                        .then(() => gutil.log('Thumb preview for ' + gutil.colors.green(folderName) + ' created!'));
-                //}
-            //});       
-
+                pageres = new Pageres({delay: 0, filename: folderName+'-thumb', format: 'jpg', scale: 0.2})
+                .src(html, ['1024x768'])
+                .dest(path.join(config.readyBDir, folderName))
+                .run()
+                .then(() => gutil.log('Thumb preview for ' + gutil.colors.green(folderName) + ' created!'));
         }
     },0);  
 };
