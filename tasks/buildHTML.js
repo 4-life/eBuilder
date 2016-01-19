@@ -16,7 +16,11 @@ module.exports = function () {
         let folderName = functions.getCurNameSlide( currentSlide.num );
         if(currentSlide.isFile){
             return gulp.src( config.sourceDir + '_files/' + currentSlide.num + '.*' )
-                .pipe(rename( folderName + '/' + folderName + '.pdf' ))
+                .pipe(rename(function(path){
+                    path.dirname = folderName;
+                    path.basename = folderName;
+                    path.extname = path.extname;
+                }))
                 .pipe(gulp.dest( config.readyBDir ));
         }else{
             return gulp.src( config.tempDir + 'index.html' )
