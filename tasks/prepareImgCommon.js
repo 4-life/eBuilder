@@ -7,7 +7,7 @@ const config = global.config,
       newer = require('gulp-newer');
 
 module.exports = function () {
-    return gulp.src( config.sourceDir + 'img/**/*' )
+    return gulp.src( config.sourceDir + 'img/**/*.{png,jpeg,jpg}' )
         .pipe(newer( config.tempDir + 'img' ))
         .pipe(imagemin({
             progressive: true,

@@ -38,11 +38,11 @@ gulp.task('prepare', () => {
 
 gulp.task('setWatchers', () => {
     
-    watch(config.sourceDir + 'img/**/*', batch(function (events, done) {
+    watch(config.sourceDir + 'img/**/*.{png,jpeg,jpg}', batch(function (events, done) {
         runSequence('prepareImgCommon', 'buildImgCommon', done);
     }));
 
-    watch(config.sourceDir + '_images/**/*', batch(function (events, done) {
+    watch(config.sourceDir + '_images/**/*.{png,jpeg,jpg}', batch(function (events, done) {
         runSequence('prepareImgCustom', 'buildImgCustom', done);
     }));
 
