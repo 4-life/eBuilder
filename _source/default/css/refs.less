@@ -1,13 +1,13 @@
-/*! 
+/*!
 	style base v1.0.2
 */
-
 /************ COMMON STYLES *************/
 *,
 *:after,
 *:before {
     box-sizing: border-box;
 }
+
 html {
     position: relative;
     height: 100%;
@@ -15,6 +15,7 @@ html {
     padding: 0;
     margin: 0;
 }
+
 body {
     position: relative;
     height: 100%;
@@ -23,6 +24,7 @@ body {
     margin: 0;
     background: #ccc;
 }
+
 section {
     position: absolute;
     width: 1024px;
@@ -32,8 +34,9 @@ section {
     top: 0;
     bottom: 0;
     left: 0;
-    right: 0;    
+    right: 0;
 }
+
 .content {
     position: relative;
     height: 100%;
@@ -41,45 +44,48 @@ section {
     padding: 1px;
     -webkit-transform: translate3d(0,0,0);
 }
-* :not(input) {
+
+*:not(input) {
     -webkit-touch-callout: none !important;
     -webkit-user-select: none !important;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
+
+input::-webkit-inner-spin-button,
+input::-webkit-outer-spin-button {
     -webkit-appearance: none;
 }
+
 *:focus {
     outline: none;
     outline: 0;
 }
-
 /************ VIDEO *************/
-.videoEmbed{
-	position: absolute;
-	width: 1024px;
-	height: 768px;
-	top: 0;
-	left: 0;
-	visibility: hidden;
-	opacity: 0;
-	background: rgba(0,0,0,.7);
-	z-index: 9999;
-    
-    &.active{
-	   visibility: visible;
-	   opacity: 1;
-	   -webkit-transition: all .5s ease-in-out;
+.videoEmbed {
+    position: absolute;
+    width: 1024px;
+    height: 768px;
+    top: 0;
+    left: 0;
+    visibility: hidden;
+    opacity: 0;
+    background: rgba(0,0,0,.7);
+    z-index: 9999;
+
+    &.active {
+        visibility: visible;
+        opacity: 1;
+        -webkit-transition: all 0.5s ease-in-out;
     }
-    
-    video{
+
+    video {
         position: absolute;
         bottom: 50px;
         left: 0;
         display: none;
     }
 }
+
 .videoEmbed_play {
     position: absolute;
     display: block;
@@ -89,29 +95,29 @@ input::-webkit-inner-spin-button {
     width: 390px;
     height: 210px;
 }
-.videoEmbed_close{
-	color: #fff;
-	text-align: right;
-	font-size: 12pt;
-	position: absolute;
-	top: 10px;
-	right: 10px;
-	width: 50px;
-	z-index: 999;
-    
-    span{
-        padding:  10px;
-        font-size:  26pt;
+
+.videoEmbed_close {
+    color: #fff;
+    text-align: right;
+    font-size: 12pt;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 50px;
+    z-index: 999;
+
+    span {
+        padding: 10px;
+        font-size: 26pt;
         cursor: pointer;
     }
 }
-
 /********** POPUP *********/
 .popup {
     position: relative;
     z-index: 9999;
-    
-    & .popup_content{
+
+    & .popup_content {
         position: absolute;
         width: 1024px;
         height: 768px;
@@ -120,12 +126,14 @@ input::-webkit-inner-spin-button {
         top: 0;
         left: 0;
         z-index: 9999;
-        -webkit-transition: all .5s ease-in-out;
-    }    
-    & .popup_content.active{
+        -webkit-transition: all 0.5s ease-in-out;
+    }
+
+    & .popup_content.active {
         visibility: visible;
         opacity: 1;
-    }    
+    }
+
     & .popup_btn {
         position: absolute;
         display: block;
@@ -134,28 +142,29 @@ input::-webkit-inner-spin-button {
         top: 720px;
         left: 970px;
     }
+
     & .popup_close {
         width: 50px;
         height: 50px;
         display: block;
         position: absolute;
         top: 0;
-        right: 0; 
+        right: 0;
         z-index: 9;
     }
 }
-
 /*************** NAVIGATION ***************/
-nav.generateMenu{
-	position: absolute;
-	padding: 0;
-	left: 0;
-	bottom: 0;
-	width: 100%;
-	z-index: -1;
-	height: 45px;
+nav.generateMenu {
+    position: absolute;
+    padding: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: -1;
+    height: 45px;
 }
-nav .generateButton{
+
+nav .generateButton {
     position: relative;
     height: 85px;
     margin-top: 16px;
@@ -164,7 +173,8 @@ nav .generateButton{
     vertical-align: top;
     font-size: 0;
 }
-nav .generateButton._goto_1{
+
+nav .generateButton._goto_1 {
     margin-left: 135px;
     margin-top: 0;
     width: 45px;
@@ -172,30 +182,29 @@ nav .generateButton._goto_1{
 }
 /************ BREEDCRUMBS *************/
 .bc {
-	display: block;
-	position: absolute;
-	top: 10px;
-	right: 44px;
+    display: block;
+    position: absolute;
+    top: 10px;
+    right: 44px;
     z-index: -1;
-    
+
     & .bc-column {
-	   width: 12px;
-	   display: block;
-	   margin: 0px 2px;
-	   float: left;
-        
-       & .bc-item {
-	       width: 12px;
-	       height: 6px;
-	       display: block;
-	       margin: 3px 0;
-	       background-color: #806b9d;
-	       border-radius: 30px;
-           
-           &.active {
-	           background-color: #f35;
-           }
-       }
+        width: 12px;
+        display: block;
+        margin: 0 2px;
+        float: left;
+
+        & .bc-item {
+            width: 12px;
+            height: 6px;
+            display: block;
+            margin: 3px 0;
+            background-color: #806b9d;
+            border-radius: 30px;
+
+            &.active {
+                background-color: #f35;
+            }
+        }
     }
 }
-

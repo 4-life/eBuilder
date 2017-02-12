@@ -5,6 +5,6 @@ Presentation builder for e-Detailing
 
 ```gulp --clean``` - clear working directory, and build the app
 
-```gulp pfull``` - generate full previews of slides
+```gulp thumbs``` - generate previews thumbnails
 
-```gulp pthumb``` - generate mini previews of slides
+```gulp upload``` - upload presentation to server

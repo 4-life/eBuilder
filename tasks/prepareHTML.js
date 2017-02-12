@@ -1,13 +1,7 @@
-'use strict';
-
 const config = global.config,
-      gulp = require('gulp'),
-      jade = require('gulp-jade');
+  gulp = require('gulp');
 
-module.exports = function () {
-    return gulp.src( config.sourceDir + 'index.jade' )
-        .pipe(jade({
-            pretty: true
-        }))
-        .pipe(gulp.dest( config.tempDir ));
+module.exports = function() {
+  return gulp.src(config.sourceDir + 'index.html')
+    .pipe(gulp.dest(config.tempDir));
 };

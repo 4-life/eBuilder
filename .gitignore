@@ -5,6 +5,13 @@ _build/**
 node_modules/
 node_modules/**
 cache/
+_ctl/**
+_zip/**
+_screenshots/**
+_ctl
+_zip
+_screenshots
+npm-debug.log
 .*
 !.gitignore
 _source/**

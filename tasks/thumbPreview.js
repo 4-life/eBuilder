@@ -1,33 +1,47 @@
-'use strict';
-
 const config = global.config,
-      gulp = require('gulp'),
-      gutil = require('gulp-util'),
-      Pageres = require('pageres'),
-      rename = require('gulp-rename'),
-      functions = require('../config/functions'),
-      path = require('path'),
-      fs = require('fs');
+  gulp = require('gulp'),
+  gutil = require('gulp-util'),
+  Pageres = require('pageres'),
+  rename = require('gulp-rename'),
+  path = require('path'),
+  currentPath = process.env.INIT_CWD,
+  fs = require('fs');
 
-module.exports = function () {
-    return config.slides.reduce(function( curName, currentSlide ){
-        currentSlide.copy ? curName = currentSlide.copy : curName = currentSlide.num;
-        let folderName = functions.getCurNameSlide( currentSlide.num );
-        
-        if(currentSlide.isFile){
-            
-            gulp.src('./config/preview.jpg')
-                .pipe(rename(folderName+'/'+folderName+'-thumb.jpg'))
-                .pipe(gulp.dest(config.readyBDir));
-            gutil.log('Thumb preview for file ' + gutil.colors.blue(folderName) + ' created!');
-            
-        }else{        
-            let html = path.join(config.readyBDir, folderName, folderName + '.html'),
-                pageres = new Pageres({delay: 0, filename: folderName+'-thumb', format: 'jpg', scale: 0.2})
-                .src(html, ['1024x768'])
-                .dest(path.join(config.readyBDir, folderName))
-                .run()
-                .then(() => gutil.log('Thumb preview for ' + gutil.colors.green(folderName) + ' created!'));
-        }
-    },0);  
+module.exports = function() {
+  var slides, buildPath;
+
+  if(config.settings) {
+    slides = fs.readdirSync(config.readyBDir);
+    buildPath = config.readyBDir;
+    buildPathName = path.parse(config.readyBDir).name;
+  }else {
+    slides = fs.readdirSync(currentPath);
+    buildPath = currentPath;
+    buildPathName = path.parse(currentPath).name
+  }
+
+  gutil.log('Find slides directories: ' + slides);
+
+  return slides.reduce(function(curName, currentSlide) {
+    let html = path.join(buildPath, currentSlide, currentSlide + '.html');
+    fs.stat(html, function(err, stat) {
+      if (err == null) {
+        let pageres = new Pageres({
+            delay: 0,
+            filename: currentSlide + '-thumb',
+            format: 'jpg',
+            scale: 0.2
+          })
+          .src(html, ['1024x768'])
+          .dest(path.join(buildPath, currentSlide))
+          .run()
+          .then(() => gutil.log('Thumb ' + currentSlide + ' created'));
+      } else {
+        gulp.src('../config/preview.jpg')
+          .pipe(rename(buildPath + '/' + currentSlide + '.jpg'))
+          .pipe(gulp.dest('./_build/_screenshots/'));
+          gutil.log('Screenshot ' + currentSlide + ' created');
+      }
+    });
+  }, 0);
 };

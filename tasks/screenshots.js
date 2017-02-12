@@ -28,13 +28,13 @@ module.exports = function() {
       if (err == null) {
         let pageres = new Pageres({
             delay: 0,
-            filename: currentSlide + '-full',
+            filename: currentSlide,
             format: 'jpg'
           })
           .src(html, ['1024x768'])
-          .dest(path.join(buildPath, currentSlide))
+          .dest(path.join('_build', '_screenshots', buildPathName))
           .run()
-          .then(() => gutil.log('Thumb ' + currentSlide + ' created'));
+          .then(() => gutil.log('Screenshot ' + currentSlide + ' created'));
       } else {
         gulp.src('../config/preview.jpg')
           .pipe(rename(buildPath + '/' + currentSlide + '.jpg'))
