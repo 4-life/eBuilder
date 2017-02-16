@@ -34,7 +34,7 @@ module.exports = function() {
   }
 
   slides.map(function(currentSlide) {
-    zipfiles.push('./_build/_zip/' + buildPathName + '/' + currentSlide + '.zip');
+    zipfiles.push('./_zip/' + buildPathName + '/' + currentSlide + '.zip');
   }, 0);
 
   gutil.log(gutil.colors.magenta('Try to transfering zip files...'));

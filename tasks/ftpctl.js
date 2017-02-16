@@ -34,7 +34,7 @@ module.exports = function() {
   }
 
   slides.map(function(currentSlide) {
-    ctlfiles.push('./_build/_ctl/' + buildPathName + '/' + currentSlide + '.ctl');
+    ctlfiles.push('./_ctl/' + buildPathName + '/' + currentSlide + '.ctl');
   }, 0);
 
   gutil.log(gutil.colors.magenta('Try to transfering ctl files...'));

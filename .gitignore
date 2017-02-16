@@ -14,5 +14,6 @@ _screenshots
 npm-debug.log
 .*
 !.gitignore
+!.jshintrc
 _source/**
 !_source/default

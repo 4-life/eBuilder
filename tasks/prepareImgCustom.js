@@ -7,9 +7,12 @@ const config = global.config,
 module.exports = function() {
   return gulp.src(config.sourceDir + '_images/**/*.{png,jpeg,jpg}')
     .pipe(newer(config.tempDir))
-    .pipe(imagemin({
+    .pipe(imagemin([
+        pngquant({quality:60}),
+      ],{
+      verbose: true,
       progressive: true,
-      use: [pngquant()]
+      interlaced: true,
     }))
     .pipe(gulp.dest(config.tempDir));
 };

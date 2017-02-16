@@ -20,27 +20,22 @@ module.exports = function() {
     buildPathName = path.parse(currentPath).name
   }
 
+
   gutil.log('Find slides directories: ' + slides);
 
-  return slides.reduce(function(curName, currentSlide) {
+  let pageres = new Pageres();
+
+  slides.forEach(function(currentSlide) {
     let html = path.join(buildPath, currentSlide, currentSlide + '.html');
-    fs.stat(html, function(err, stat) {
-      if (err == null) {
-        let pageres = new Pageres({
-            delay: 0,
-            filename: currentSlide,
-            format: 'jpg'
-          })
-          .src(html, ['1024x768'])
-          .dest(path.join('_build', '_screenshots', buildPathName))
-          .run()
-          .then(() => gutil.log('Screenshot ' + currentSlide + ' created'));
-      } else {
-        gulp.src('../config/preview.jpg')
-          .pipe(rename(buildPath + '/' + currentSlide + '.jpg'))
-          .pipe(gulp.dest('./_build/_screenshots/'));
-          gutil.log('Screenshot ' + currentSlide + ' created');
-      }
-    });
-  }, 0);
+
+    if (fs.existsSync(html)) {
+      pageres.src(html, ['1024x768'], {
+        delay: 0,
+        filename: currentSlide,
+        format: 'jpg'
+      });
+    }
+  });
+
+  return pageres.dest(path.join('_screenshots', buildPathName)).run().then(() => gutil.log('Screenshots created'));
 };

@@ -6,6 +6,7 @@ const rename = require('gulp-rename');
 const path = require('path');
 const currentPath = process.env.INIT_CWD;
 const fs = require('fs');
+const merge = require('merge-stream');
 
 module.exports = function() {
   var slides, buildPath;
@@ -22,12 +23,15 @@ module.exports = function() {
 
   gutil.log('Find slides directories: ' + slides);
 
-  return slides.reduce(function(curName, currentSlide) {
+  var streams = [];
+  slides.forEach(function(currentSlide) {
     let slide = path.join(buildPath, currentSlide, '/**/*');
 
-    gulp.src(slide, {base: buildPath})
+    var stream = gulp.src(slide, {base: buildPath})
       .pipe(zip(currentSlide + '.zip'))
-      .pipe(gulp.dest('./_build/_zip/' + buildPathName));
-
-  }, 0);
+      .pipe(gulp.dest('./_zip/' + buildPathName));
+    streams.push(stream);
+  });
+  gutil.log(gutil.colors.magenta('zip files create in _zip/' + buildPathName));
+  return merge(streams);
 };

@@ -80,7 +80,7 @@ gulp.task('setWatchers', () => {
 });
 
 gulp.task('thumbs', () => {
-  return runSequence('pfull', 'pthumb');
+  return runSequence('pfull', 'pthumb', 'thumbsforfiles', function() {gutil.log('Task thumbs is done');});
 });
 
 gulp.task('build', () => {
@@ -89,7 +89,7 @@ gulp.task('build', () => {
 });
 
 gulp.task('upload', () => {
-  return runSequence('zip', 'ctl', 'ftpzip', 'ftpctl');
+  return runSequence('zip', 'ctl', 'ftpzip', 'ftpctl', function() {gutil.log('Task upload is done');});
 });
 
 gulp.task('prepareImgCommon', require('./tasks/prepareImgCommon'));
@@ -108,6 +108,7 @@ gulp.task('prepareAssets',    require('./tasks/prepareAssets'));
 gulp.task('buildAssets',      require('./tasks/buildAssets'));
 gulp.task('pfull',            require('./tasks/fullPreview'));
 gulp.task('pthumb',           require('./tasks/thumbPreview'));
+gulp.task('thumbsforfiles',   require('./tasks/thumbsforfiles'));
 gulp.task('screenshots',      require('./tasks/screenshots'));
 gulp.task('slidesList',       require('./tasks/slidesList'));
 gulp.task('zip',              require('./tasks/zip'));

@@ -20,20 +20,22 @@ module.exports = function() {
     buildPathName = path.parse(currentPath).name
   }
 
-  gutil.log('Find slides directories: ' + slides);
-
   var streams = [];
   slides.forEach(function(currentSlide) {
-    let fullthumb = path.join(buildPath, currentSlide, currentSlide + '-full.jpg');
+    let html = path.join(buildPath, currentSlide, currentSlide + '.html');
 
-    if (fs.existsSync(fullthumb)) {
-      var stream = gulp.src(fullthumb)
-        .pipe(rename(currentSlide + '/' + currentSlide + '-thumbs.jpg'))
+    if (!fs.existsSync(html)) {
+      gutil.log('Find file: ' + currentSlide);
+      var stream1 = gulp.src('./config/preview.jpg')
+        .pipe(rename(currentSlide + '/' + currentSlide + '-full.jpg'))
         .pipe(gulp.dest(buildPath));
-      streams.push(stream);
+      var stream2 = gulp.src('./config/preview.jpg')
+        .pipe(rename(currentSlide + '/' + currentSlide + '-thumb.jpg'))
+        .pipe(gulp.dest(buildPath));
+      streams.push(stream1, stream2);
     }
   });
 
-  gutil.log(gutil.colors.magenta('Thumbs created in ' + buildPathName));
+  gutil.log(gutil.colors.magenta('Thumbs created for files in ' + buildPathName));
   return merge(streams);
 };

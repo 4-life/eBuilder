@@ -1,0 +1,10 @@
+{
+  "shadow": true,
+  "devel": true,
+  "browser": true,
+  "undef": true,
+  "unused": true,
+  "globals": {
+    "$$": true, "com": true
+  }
+}

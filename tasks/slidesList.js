@@ -14,7 +14,6 @@ module.exports = function() {
     .replace('[Groups]', functions.getGroups(config.presentation.brand) || '')
     .replace('[detailGroup]', functions.getDetailGroup(config.presentation.brand) || '');
 
-
   config.slides.map(function(currentSlide, index) {
     str += maskSlide
       .replace('[currentSlide]', functions.getCurNameSlide(currentSlide.num))
@@ -22,10 +21,10 @@ module.exports = function() {
       .replace('[external]', functions.getCurNamePresentation() + '__' + functions.getCurNameSlide(currentSlide.num))
   }, 0);
 
-  gulp.src(config.tempDir)
+  gutil.log(gutil.colors.magenta('slides list file create in ' + config.tempDir + 'slides_list.txt'));
+  gutil.log(gutil.colors.magenta('Preparing end ') + gutil.colors.green('successfully!'));
+
+  return gulp.src(config.tempDir)
     .pipe(file('slides_list.txt', str))
     .pipe(gulp.dest(config.tempDir));
-
-  gutil.log(gutil.colors.magenta('slides list file create in ' + config.tempDir + 'slides_list.txt'));
-  gutil.log(gutil.colors.magenta('Preparing end ') + gutil.colors.green('successfully!'))
 };

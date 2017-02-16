@@ -8,6 +8,8 @@ const currentPath = process.env.INIT_CWD;
 const fs = require('fs');
 const path = require('path');
 
+const merge = require('merge-stream');
+
 module.exports = function() {
   let slides;
   let buildPath;
@@ -24,7 +26,9 @@ module.exports = function() {
     buildPathName = path.parse(currentPath).name;
   }
 
-  slides.map(function(currentSlide, index) {
+
+  var streams = [];
+  slides.forEach(function(currentSlide) {
     str = maskCTL
       .replace('[username]', ftpData.user)
       .replace('[pass]', ftpData.pass)
@@ -32,10 +36,12 @@ module.exports = function() {
       .replace('[slidename]', currentSlide)
       .replace('[description]', currentSlide);
 
-    gulp.src('./_build/_ctl/')
+    var stream = gulp.src('./_ctl/')
       .pipe(file(currentSlide + '.ctl', str))
-      .pipe(gulp.dest('./_build/_ctl/' + buildPathName));
+      .pipe(gulp.dest('./_ctl/' + buildPathName));
+    streams.push(stream);
+  });
 
-    gutil.log(gutil.colors.magenta('ctl files create in ' + '_ctl/' + buildPathName + ''));
-  }, 0);
+  gutil.log(gutil.colors.magenta('ctl files create in _ctl/' + buildPathName));
+  return merge(streams);
 };

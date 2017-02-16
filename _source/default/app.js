@@ -1,7 +1,3 @@
-/*!
-	script base v1.2.0
-*/
-
 (function() {
 
   var app = {
@@ -16,16 +12,17 @@
       goto_back_btn: '.goto_back',
 
       // в функции customEvents описываются все события и анимация,
-			// как общие, так и индивидуальные для каждого слайда
+      // как общие, так и индивидуальные для каждого слайда
       customEvents: function() {
 
-				console.info('Этот log выполняется на всех слайдах');
+        console.info('Этот log выполняется на всех слайдах');
 
-				// @if NUM=='num'
-				console.info('Этот log выполняется только на слайде num');
-				// @endif
+        // @if NUM=='num'
+        console.info('Этот log выполняется только на слайде num');
+        // @endif
 
       },
+
 
       // тут обьявляем функции и события кастомных платформ
       initOtherPlatforms: function() {
@@ -33,20 +30,22 @@
 
         this.veevaInit = function() {
           com.veeva.clm.getDataForCurrentObject('Presentation', 'Presentation_Id_vod__c', function(result) {
+            console.log(result);
             //app.opt.current_presentation = result.Presentation.Presentation_Id_vod__c;
             com.veeva.clm.getDataForCurrentObject('KeyMessage', 'Media_File_Name_vod__c', function(result) {
-              app.opt.current_slide = result.KeyMessage.Media_File_Name_vod__c.split('.')[0];
+              app.opt.current_slide = result.KeyMessage.Media_File_Name_vod__c.split(".")[0];
 
               app.afterStart();
             });
           });
-        }
+        };
 
-        // событие перехода на слайд
+        // событие перехода на слайд. В данном случае для двух платформ
         this.goToSlide = function(slide) {
           com.veeva.clm.gotoSlide(slide + '.zip', present);
           //$LEAP.slideName(slide);
-        }
+        };
+
       },
 
       ////////------------ END MAIN OPTIONS -----------///////////////
@@ -54,17 +53,17 @@
       current_presentation: false,
       current_slide: false,
       isSlideDataReady: function() {
-        return app.opt.current_presentation != '' && app.opt.current_slide != '';
+        return app.opt.current_presentation !== '' && app.opt.current_slide !== '';
       },
-      slidePresentationH: '',
-      slidePresentationV: '',
-      slidePresentationV2: '',
-      prev_Present: '',
-      prev_Slide: '',
-      slideLeft: '',
-      slideRight: '',
-      slideUp: '',
-      slideDown: '',
+      slidePresentationH: "",
+      slidePresentationV: "",
+      slidePresentationV2: "",
+      prev_Present: "",
+      prev_Slide: "",
+      slideLeft: "",
+      slideRight: "",
+      slideUp: "",
+      slideDown: "",
       is_app: false
     },
     init: function() {
@@ -76,7 +75,7 @@
 
       // определение приложение это или веб-страница
       if (address.indexOf('/mobile/') == -1) {
-        self.opt.current_slide = address.slice(address.lastIndexOf('/') + 1, address.lastIndexOf('.html'));
+        self.opt.current_slide = address.slice(address.lastIndexOf("/") + 1, address.lastIndexOf(".html"));
         self.afterStart();
       } else {
         self.opt.is_app = true;
@@ -88,51 +87,51 @@
       var self = this;
       self.opt.current_presentation = self.getCurrentPresent();
       if (!self.opt.current_presentation) {
-        alert('Данный слайд отсутствует в карте презентации!');
+        alert("Данный слайд отсутствует в карте презентации!");
         return false;
       }
       self.setSwipesData();
       self.transitionLog();
-      self.opt.show_bc ? self.generate_bc() : true;
+      if (self.opt.show_bc) self.generate_bc();
       self.initEvents();
     },
     initEvents: function() {
       var self = this;
 
-      $$('body').on('swipeLeft', function(e) {
+      $$('body').on("swipeLeft", function() {
         if (!self.opt.isSlideDataReady()) return;
-        if (self.opt.slideRight != '') {
+        if (self.opt.slideRight !== '') {
           self.gotoSlide(false, self.opt.slideRight, self.opt.slidePresentationH);
         }
       });
-      $$('body').on('swipeRight', function(e) {
+      $$('body').on("swipeRight", function() {
         if (!self.opt.isSlideDataReady()) return;
-        if (self.opt.slideLeft != '') {
+        if (self.opt.slideLeft !== '') {
           self.gotoSlide(false, self.opt.slideLeft, self.opt.slidePresentationH);
         }
       });
-      $$('body').on('swipeUp', function(e) {
+      $$('body').on("swipeUp", function() {
         if (!self.opt.isSlideDataReady()) return;
-        if (self.opt.slideDown != '') {
+        if (self.opt.slideDown !== '') {
           self.gotoSlide(false, self.opt.slideDown, self.opt.slidePresentationV);
         }
       });
-      $$('body').on('swipeDown', function(e) {
+      $$('body').on("swipeDown", function() {
         if (!self.opt.isSlideDataReady()) return;
-        if (self.opt.slideUp != '') {
+        if (self.opt.slideUp !== '') {
           self.gotoSlide(false, self.opt.slideUp, self.opt.slidePresentationV2);
         }
       });
 
       for (var a in self.opt.links) {
-        self.gotoSlide('button.' + self.opt.links[a]['class'], self.opt.links[a]['slideTo'], self.opt.links[a]['presentTo']);
+        self.gotoSlide('button.' + self.opt.links[a]['class'], self.opt.links[a].slideTo, self.opt.links[a].presentTo);
       }
 
       $$(document).on('touchmove', function(e) {
         e.preventDefault();
       });
 
-      $$(self.opt.goto_back_btn).on('touchend', function(e) {
+      $$(self.opt.goto_back_btn).on("touchend", function() {
         self.go_back();
       });
 
@@ -148,17 +147,17 @@
       }
     },
     setCurrentPresent: function(present, callback) {
-      //localStorage.setItem('currentPresentationName', present);
+      //localStorage.setItem("currentPresentationName", present);
       return callback;
     },
     gotoSlideEvent: function(slide, present) {
       var self = this;
-      self.setCurrentPresent(present, self.opt.is_app ? self.otherPlatform.goToSlide(slide, present) : document.location.href = '../' + slide + '/' + slide + '.html')
+      self.setCurrentPresent(present, self.opt.is_app ? self.otherPlatform.goToSlide(slide, present) : document.location.href = "../" + slide + "/" + slide + ".html");
     },
     gotoSlide: function(obj, slide, present) {
       var self = this;
       if (obj) {
-        $$(obj).on('touchend', function() {
+        $$(obj).on("touchend", function() {
           self.setCurrentPresent(present, self.gotoSlideEvent(slide, present));
         });
       } else {
@@ -171,8 +170,8 @@
 
     transitionLog: function() {
       var self = this;
-      var presentLog = localStorage.getItem('presentLog');
-      var slideLog = localStorage.getItem('slideLog');
+      var presentLog = localStorage.getItem("presentLog");
+      var slideLog = localStorage.getItem("slideLog");
 
       if (presentLog) {
         presentLog = presentLog.split(',');
@@ -186,8 +185,8 @@
         slideLog = new Array(self.opt.current_slide);
       }
 
-      localStorage.setItem('presentLog', presentLog.join());
-      localStorage.setItem('slideLog', slideLog.join());
+      localStorage.setItem("presentLog", presentLog.join());
+      localStorage.setItem("slideLog", slideLog.join());
 
     },
 
@@ -201,7 +200,7 @@
         s = '',
         s2 = '',
         flag = false;
-      if (self.opt.map[self.opt.current_presentation].p_pres != '') {
+      if (self.opt.map[self.opt.current_presentation].p_pres !== '') {
         presentation = self.opt.map[self.opt.current_presentation].p_pres;
       } else {
         presentation = self.opt.current_presentation;
@@ -230,7 +229,7 @@
         rows = [];
       }
 
-			for (var i in columns) {
+      for (var i in columns) {
         for (var j in columns[i]) {
           s += '<div class="bc-item' + (columns[i][j] == 1 ? ' active' : '') + '"></div>';
         }
@@ -249,7 +248,7 @@
       var k, flag = false,
         slides, slide;
 
-      if (self.opt.map[self.opt.current_presentation].p_pres == '') {
+      if (self.opt.map[self.opt.current_presentation].p_pres === '') {
         slides = self.opt.map[self.opt.current_presentation].slides;
         self.opt.slidePresentationH = self.opt.current_presentation;
         slide = self.opt.current_slide;
@@ -261,7 +260,7 @@
 
       for (var k in slides) {
         if (slides[k] == slide) {
-          self.opt.slideLeft = (parseInt(k) == 0) ? '' : slides[parseInt(k) - 1];
+          self.opt.slideLeft = (parseInt(k) === 0) ? '' : slides[parseInt(k) - 1];
           self.opt.slideRight = (parseInt(k) == (slides.length - 1)) ? '' : slides[parseInt(k) + 1];
           flag = true;
         }
@@ -271,7 +270,7 @@
         }
       }
 
-      if (self.opt.map[self.opt.current_presentation].p_pres == '') {
+      if (self.opt.map[self.opt.current_presentation].p_pres === '') {
         for (var k in self.opt.map) {
           if (self.opt.map[k].p_slide == self.opt.current_slide) {
             self.opt.slidePresentationV = k;
@@ -292,7 +291,7 @@
 
         for (var k in slides) {
           if (slides[k] == slide) {
-            if (parseInt(k) == 0) {
+            if (parseInt(k) === 0) {
               self.opt.slidePresentationV2 = self.opt.map[self.opt.current_presentation].p_pres;
               self.opt.slideUp = self.opt.map[self.opt.current_presentation].p_slide;
             } else {
@@ -308,7 +307,7 @@
         }
       }
     }
-  }
+  };
 
   app.init();
 
