@@ -1,7 +1,6 @@
 const config = global.config;
 const gulp = require('gulp');
 const gutil = require('gulp-util');
-const functions = require('../config/functions');
 const file = require('gulp-file');
 const ftpData = require('../config/.ftp.json');
 const currentPath = process.env.INIT_CWD;
@@ -11,7 +10,7 @@ const path = require('path');
 const merge = require('merge-stream');
 
 module.exports = function() {
-  let slides;
+  let slides, buildPathName;
   let buildPath;
   let maskCTL = 'USER=[username]\r\nPASSWORD=[pass]\r\nFILENAME=[filename]\r\nName=[slidename]\r\nDescription_vod__c=[description]\r\nActive_vod__c=true';
   let str = '';

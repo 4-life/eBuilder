@@ -18,7 +18,7 @@ module.exports = function() {
     str += maskSlide
       .replace('[currentSlide]', functions.getCurNameSlide(currentSlide.num))
       .replace('[order]', index + 1)
-      .replace('[external]', functions.getCurNamePresentation() + '__' + functions.getCurNameSlide(currentSlide.num))
+      .replace('[external]', functions.getCurNamePresentation() + '__' + functions.getCurNameSlide(currentSlide.num));
   }, 0);
 
   gutil.log(gutil.colors.magenta('slides list file create in ' + config.tempDir + 'slides_list.txt'));

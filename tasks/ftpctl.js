@@ -1,8 +1,6 @@
 const config = global.config;
 const gulp = require('gulp');
 const gutil = require('gulp-util');
-const functions = require('../config/functions');
-const file = require('gulp-file');
 const ftpData = require('../config/.ftp.json');
 const currentPath = process.env.INIT_CWD;
 const fs = require('fs');
@@ -10,9 +8,8 @@ const ftp = require('vinyl-ftp');
 const path = require('path');
 
 module.exports = function() {
-  let slides;
+  let slides, buildPathName;
   let buildPath;
-  let zipfiles = [];
   let ctlfiles = [];
 
   let connection = ftp.create({

@@ -13,7 +13,7 @@ try {
   gutil.log('Config file doesnt exist');
 }
 
-const functions = require('./config/functions')
+const functions = require('./config/functions');
 
 process.setMaxListeners(0);
 
@@ -25,10 +25,10 @@ gulp.task('prepare', () => {
 
     if(gutil.env.clean){
       gutil.log(gutil.colors.magenta('Start preparing with clean ' + gutil.colors.blue(config.presentation.brand + '_' + config.presentation.nl_PID) + ' presentation'));
-      runSequence('clean', 'prepareImgCommon', 'buildImgCommon', 'prepareImgCustom', 'buildImgCustom', 'prepareCSS', 'buildCSS', 'prepareHTML', 'buildHTML', 'prepareJS', 'buildJS', 'prepareLibJS', 'buildLibJS', 'prepareAssets', 'buildAssets', 'slidesList', function(){resolve()});
+      runSequence('clean', 'prepareImgCommon', 'buildImgCommon', 'prepareImgCustom', 'buildImgCustom', 'prepareCSS', 'buildCSS', 'prepareHTML', 'buildHTML', 'prepareJS', 'buildJS', 'prepareLibJS', 'buildLibJS', 'prepareAssets', 'buildAssets', 'slidesList', function(){resolve();});
     }else{
       gutil.log(gutil.colors.magenta('Start preparing ' + gutil.colors.blue(config.presentation.brand + '_' + config.presentation.nl_PID) + ' presentation'));
-      runSequence('prepareImgCommon', 'buildImgCommon', 'prepareImgCustom', 'buildImgCustom', 'prepareCSS', 'buildCSS', 'prepareHTML', 'buildHTML', 'prepareJS', 'buildJS', 'prepareLibJS', 'buildLibJS', 'prepareAssets', 'buildAssets', 'slidesList', function(){resolve()});
+      runSequence('prepareImgCommon', 'buildImgCommon', 'prepareImgCustom', 'buildImgCustom', 'prepareCSS', 'buildCSS', 'prepareHTML', 'buildHTML', 'prepareJS', 'buildJS', 'prepareLibJS', 'buildLibJS', 'prepareAssets', 'buildAssets', 'slidesList', function(){resolve();});
     }
 
   }).then(
@@ -80,7 +80,7 @@ gulp.task('setWatchers', () => {
 });
 
 gulp.task('thumbs', () => {
-  return runSequence('pfull', 'pthumb', 'thumbsforfiles', function() {gutil.log('Task thumbs is done');});
+  return runSequence('pfull', function() {return false;});
 });
 
 gulp.task('build', () => {

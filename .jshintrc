@@ -4,7 +4,8 @@
   "browser": true,
   "undef": true,
   "unused": true,
+  "esversion": 6,
   "globals": {
-    "$$": true, "com": true
+    "$$": true, "com": true, "global": true, "require": true, "module": true, "process": true
   }
 }

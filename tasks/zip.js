@@ -2,14 +2,13 @@ const config = global.config;
 const gulp = require('gulp');
 const gutil = require('gulp-util');
 const zip = require('gulp-zip');
-const rename = require('gulp-rename');
 const path = require('path');
 const currentPath = process.env.INIT_CWD;
 const fs = require('fs');
 const merge = require('merge-stream');
 
 module.exports = function() {
-  var slides, buildPath;
+  var slides, buildPath, buildPathName;
 
   if(config.settings) {
     slides = fs.readdirSync(config.readyBDir);
@@ -18,7 +17,7 @@ module.exports = function() {
   }else {
     slides = fs.readdirSync(currentPath);
     buildPath = currentPath;
-    buildPathName = path.parse(currentPath).name
+    buildPathName = path.parse(currentPath).name;
   }
 
   gutil.log('Find slides directories: ' + slides);

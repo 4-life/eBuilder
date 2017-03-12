@@ -1,14 +1,13 @@
 const config = global.config,
-  gulp = require('gulp'),
   gutil = require('gulp-util'),
   Pageres = require('pageres'),
-  rename = require('gulp-rename'),
   path = require('path'),
   currentPath = process.env.INIT_CWD,
   fs = require('fs');
 
 module.exports = function() {
-  var slides, buildPath;
+  var slides, buildPath, buildPathName;
+  var s = 0;
 
   if(config.settings) {
     slides = fs.readdirSync(config.readyBDir);
@@ -17,25 +16,35 @@ module.exports = function() {
   }else {
     slides = fs.readdirSync(currentPath);
     buildPath = currentPath;
-    buildPathName = path.parse(currentPath).name
+    buildPathName = path.parse(currentPath).name;
   }
-
 
   gutil.log('Find slides directories: ' + slides);
 
-  let pageres = new Pageres();
+  function task() {
+    let pageres = new Pageres({delay: 2});
 
-  slides.forEach(function(currentSlide) {
-    let html = path.join(buildPath, currentSlide, currentSlide + '.html');
+    let html = path.join(buildPath, slides[s], slides[s] + '.html');
+
+    gutil.log('' + (s+1) + '/' + slides.length + ' done');
 
     if (fs.existsSync(html)) {
       pageres.src(html, ['1024x768'], {
         delay: 0,
-        filename: currentSlide,
+        filename: slides[s],
         format: 'jpg'
       });
     }
-  });
 
-  return pageres.dest(path.join('_screenshots', buildPathName)).run().then(() => gutil.log('Screenshots created'));
+    pageres.dest(path.join('_screenshots', buildPathName)).run().then(() => {
+      s++;
+      if(s < slides.length) {
+        task();
+      }else {
+        gutil.log('Screenshots created');
+      }
+    });
+  }
+
+  task();
 };

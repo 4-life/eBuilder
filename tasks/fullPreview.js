@@ -2,15 +2,13 @@ const config = global.config;
 const gulp = require('gulp');
 const gutil = require('gulp-util');
 const Pageres = require('pageres');
-const rename = require('gulp-rename');
 const path = require('path');
 const currentPath = process.env.INIT_CWD;
 const fs = require('fs');
 
-const merge = require('merge-stream');
-
 module.exports = function() {
-  var slides, buildPath;
+  var slides, buildPath, buildPathName;
+  var s = 0;
 
   if (config.settings) {
     slides = fs.readdirSync(config.readyBDir);
@@ -19,25 +17,36 @@ module.exports = function() {
   } else {
     slides = fs.readdirSync(currentPath);
     buildPath = currentPath;
-    buildPathName = path.parse(currentPath).name
+    buildPathName = path.parse(currentPath).name;
   }
 
   gutil.log('Find slides directories: ' + slides);
 
-  let pageres = new Pageres();
+  function task() {
+    let pageres = new Pageres({delay: 0});
 
-  slides.forEach(function(currentSlide) {
-    let html = path.join(buildPath, currentSlide, currentSlide + '.html');
+    let html = path.join(buildPath, slides[s], slides[s] + '.html');
 
     if (fs.existsSync(html)) {
       pageres.src(html, ['1024x768'], {
         delay: 0,
-        filename: currentSlide + '/' + currentSlide + '-full',
+        filename: slides[s] + '/' + slides[s] + '-full',
         format: 'jpg',
         scale: 0.7
       });
     }
-  });
 
-  return pageres.dest(buildPath).run().then(() => gutil.log('Full thumbs created'));
+    pageres.dest(buildPath).run().then(() => {
+      s++;
+      gutil.log('' + (s) + '/' + slides.length + ' thumb done');
+      if(s < slides.length) {
+        task();
+      }else {
+        gutil.log('Thumbs created');
+        gulp.start('pthumb', 'thumbsforfiles');
+      }
+    });
+  }
+
+  task();
 };

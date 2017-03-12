@@ -8,7 +8,7 @@ const fs = require('fs');
 const merge = require('merge-stream');
 
 module.exports = function() {
-  var slides, buildPath;
+  var slides, buildPath, buildPathName;
 
   if (config.settings) {
     slides = fs.readdirSync(config.readyBDir);
@@ -17,7 +17,7 @@ module.exports = function() {
   } else {
     slides = fs.readdirSync(currentPath);
     buildPath = currentPath;
-    buildPathName = path.parse(currentPath).name
+    buildPathName = path.parse(currentPath).name;
   }
 
   gutil.log('Find slides directories: ' + slides);
