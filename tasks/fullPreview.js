@@ -31,8 +31,7 @@ module.exports = function() {
       pageres.src(html, ['1024x768'], {
         delay: 0,
         filename: slides[s] + '/' + slides[s] + '-full',
-        format: 'jpg',
-        scale: 0.7
+        format: 'jpg'
       });
     }
 
@@ -41,9 +40,11 @@ module.exports = function() {
       gutil.log('' + (s) + '/' + slides.length + ' thumb done');
       if(s < slides.length) {
         task();
-      }else {
+      } else {
         gutil.log('Thumbs created');
-        gulp.start('pthumb', 'thumbsforfiles');
+        setTimeout(function() {
+          gulp.start('pthumb', 'thumbsforfiles');
+        }, slides.length * 100);
       }
     });
   }

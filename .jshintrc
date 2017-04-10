@@ -6,6 +6,6 @@
   "unused": true,
   "esversion": 6,
   "globals": {
-    "$$": true, "com": true, "global": true, "require": true, "module": true, "process": true
+    "$$": true, "$": true, "com": true, "global": true, "require": true, "module": true, "process": true, "__dirname": true
   }
 }

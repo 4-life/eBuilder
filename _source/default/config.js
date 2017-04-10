@@ -1,13 +1,14 @@
-'use strict';
-
 module.exports = {
   sourceDir: __dirname,
   presentation: {
-    lang: 'RU',
-    brand: 'brand',
-    nl_PID: 'nl_PID',
-    presentPrefix: 'P',
-    slidePrefix: 'S'
+    lang: 'RU', // язык презентации
+    brand: 'No_brand', // бренд презентации
+    nl_PID: 'nl_PID', // индекс nestline
+    presentPrefix: 'P', // первый символ в названии презентации
+    slidePrefix: 'S', // первый символ в названии всех слайдов
+    hidden: false, // видимость презентации в veeva
+    approved: true, // если true - презентация обновится на ipad, иначе нет
+    Disable_Actions: ['Navigation_Bar_vod', 'Swipe_vod'] // отключенные события в ipad
   },
   slides: [
     {num: 1},
@@ -33,4 +34,4 @@ module.exports = {
       //{"class":"className","slideTo":"slide","presentTo":"present"}
     ]
   }
-}
+};

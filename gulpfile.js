@@ -116,5 +116,6 @@ gulp.task('ctl',              require('./tasks/ctl'));
 gulp.task('ftpzip',           require('./tasks/ftpzip'));
 gulp.task('ftpctl',           require('./tasks/ftpctl'));
 gulp.task('clean',            require('./tasks/clean'));
+gulp.task('createPresent',    require('./tasks/createPresent'));
 
 gulp.task('default', ['prepare']);

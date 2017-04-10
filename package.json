@@ -37,5 +37,7 @@
   },
   "homepage": "https://github.com/4-life/eBuilder#readme",
   "main": "gulpfile.js",
-  "dependencies": {}
+  "dependencies": {
+    "jsforce": "^1.7.1"
+  }
 }
