@@ -37,13 +37,15 @@ module.exports = function() {
 
     pageres.dest(buildPath).run().then(() => {
       s++;
-      gutil.log('' + (s) + '/' + slides.length + ' thumb done');
+      gutil.log(gutil.colors.bgGreen(slides[s-1]) + ': ' + (s) + '/' + slides.length + ' thumb done' + gutil.colors.green(' ✔ '));
       if(s < slides.length) {
-        task();
+        setTimeout(function () {
+          task();
+        }, 1000);
       } else {
         gutil.log('Thumbs created');
         setTimeout(function() {
-          gulp.start('pthumb', 'thumbsforfiles');
+          gulp.start('thumbsforfiles', 'pthumb');
         }, slides.length * 100);
       }
     });

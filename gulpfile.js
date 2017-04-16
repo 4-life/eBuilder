@@ -1,10 +1,8 @@
 const gulp = require('gulp');
 const gutil = require('gulp-util');
 const runSequence = require('run-sequence').use(gulp);
-const fs = require('fs');
 const watch = require('gulp-watch');
 const batch = require('gulp-batch');
-const path = require('path');
 
 try {
   const config = global.config = require(process.env.INIT_CWD + '/config');
@@ -116,6 +114,7 @@ gulp.task('ctl',              require('./tasks/ctl'));
 gulp.task('ftpzip',           require('./tasks/ftpzip'));
 gulp.task('ftpctl',           require('./tasks/ftpctl'));
 gulp.task('clean',            require('./tasks/clean'));
-gulp.task('createPresent',    require('./tasks/createPresent'));
+gulp.task('createpresent',    require('./tasks/createPresent'));
+gulp.task('help',             require('./tasks/help'));
 
 gulp.task('default', ['prepare']);

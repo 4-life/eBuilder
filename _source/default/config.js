@@ -8,7 +8,9 @@ module.exports = {
     slidePrefix: 'S', // первый символ в названии всех слайдов
     hidden: false, // видимость презентации в veeva
     approved: true, // если true - презентация обновится на ipad, иначе нет
-    Disable_Actions: ['Navigation_Bar_vod', 'Swipe_vod'] // отключенные события в ipad
+    groups: '[RU_Brand_Team],[CV_RU]', // Groups
+    detailGroup: 'CV_RU', // Detail Group
+    disableActions: 'Navigation_Bar_vod; Swipe_vod; History_Buttons_vod; Rotation_Lock_vod; Zoom_vod; Pinch_To_Exit_vod;' // отключенные события в ipad
   },
   slides: [
     {num: 1},

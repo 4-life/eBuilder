@@ -28,7 +28,7 @@ module.exports = function() {
 
     if (fs.existsSync(fullthumb)) {
       var stream = gulp.src(fullthumb)
-        .pipe(rename(currentSlide + '/' + currentSlide + '-thumbs.jpg'))
+        .pipe(rename(currentSlide + '/' + currentSlide + '-thumb.jpg'))
         .pipe(gulp.dest(buildPath));
       streams.push(stream);
     }

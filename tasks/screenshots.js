@@ -26,7 +26,7 @@ module.exports = function() {
 
     let html = path.join(buildPath, slides[s], slides[s] + '.html');
 
-    gutil.log('' + (s+1) + '/' + slides.length + ' done');
+    gutil.log(gutil.colors.bgGreen(slides[s]) + ': ' + (s+1) + '/' + slides.length + ' thumb done' + gutil.colors.green(' ✔ '));
 
     if (fs.existsSync(html)) {
       pageres.src(html, ['1024x768'], {
@@ -39,7 +39,9 @@ module.exports = function() {
     pageres.dest(path.join('_screenshots', buildPathName)).run().then(() => {
       s++;
       if(s < slides.length) {
-        task();
+        setTimeout(function () {
+          task();
+        });
       }else {
         gutil.log('Screenshots created');
       }

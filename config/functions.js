@@ -95,87 +95,7 @@ var functions = {
     }
   },
 
-  referenceData: [{
-      brand: 'betaloc',
-      groups: '[RU_CV_1],[RU_Brand_Team]',
-      detailGroup: 'CV_RU'
-    },
-    {
-      brand: 'crestor',
-      groups: '[RU_CV_1],[RU_CV_2],[RU_Brand_Team]',
-      detailGroup: 'CV_RU'
-    },
-    {
-      brand: 'brilinta',
-      groups: '[RU_CV_1],[RU_CV_2],[RU_Brand_Team]',
-      detailGroup: 'CV_RU'
-    },
-    {
-      brand: 'byetta',
-      groups: '[RU_DIABETES],[RU_Brand_Team]',
-      detailGroup: 'Diabet_RU'
-    },
-    {
-      brand: 'komboglyze',
-      groups: '[RU_DIABETES],[RU_Brand_Team]',
-      detailGroup: 'Diabet_RU'
-    },
-    {
-      brand: 'onglyza',
-      groups: '[RU_DIABETES],[RU_Brand_Team]',
-      detailGroup: 'Diabet_RU'
-    },
-    {
-      brand: 'forxiga',
-      groups: '[RU_DIABETES],[RU_Brand_Team]',
-      detailGroup: 'Diabet_RU'
-    },
-    {
-      brand: 'pulmicort',
-      groups: '[RU_RIA_1],[RU_Brand_Team]',
-      detailGroup: 'RIA_RU'
-    },
-    {
-      brand: 'symbicort',
-      groups: '[RU_RIA_1],[RU_RIA_2],[RU_Brand_Team]',
-      detailGroup: 'RIA_RU'
-    },
-    {
-      brand: 'bretaris',
-      groups: '[RU_RIA_1],[RU_RIA_2],[RU_Brand_Team]',
-      detailGroup: 'RIA_RU'
-    },
-    {
-      brand: 'iressa',
-      groups: '[RU_ONCO],[RU_Brand_Team]',
-      detailGroup: 'Onco_RU'
-    },
-    {
-      brand: 'zoladex',
-      groups: '[RU_ONCO],[RU_Brand_Team]',
-      detailGroup: 'Onco_RU'
-    },
-    {
-      brand: 'faslodex',
-      groups: '[RU_ONCO],[RU_Brand_Team]',
-      detailGroup: 'Onco_RU'
-    },
-    {
-      brand: 'zinforo',
-      groups: '[RU_AB],[RU_Brand_Team]',
-      detailGroup: 'Gr+_Inf_RU'
-    },
-    {
-      brand: 'seroquel',
-      groups: '[RU_CNS],[RU_Brand_Team]',
-      detailGroup: 'CNS_RU'
-    },
-    {
-      brand: 'nexium',
-      groups: '[RU_GI],[RU_Brand_Team]',
-      detailGroup: 'GI_RU'
-    }
-  ],
+  referenceData: [],
 
   createEmptyImgFolders: function() {
 
@@ -183,7 +103,7 @@ var functions = {
     fs.exists(assetsPath, function(exists) {
       if (!exists) {
         mkdirp(assetsPath, function(err) {
-          if (err) console.error(err)
+          if (err) console.error(err);
           else console.log('Creating empty assets dir in ' + assetsPath);
         });
       }
@@ -193,7 +113,7 @@ var functions = {
     fs.exists(filesPath, function(exists) {
       if (!exists) {
         mkdirp(filesPath, function(err) {
-          if (err) console.error(err)
+          if (err) console.error(err);
           else console.log('Creating empty files dir in ' + filesPath);
         });
       }
@@ -205,7 +125,7 @@ var functions = {
       fs.exists(sourcePath, function(exists) {
         if (!exists) {
           mkdirp(sourcePath, function(err) {
-            if (err) console.error(err)
+            if (err) console.error(err);
             else console.log('Creating empty images dir in ' + sourcePath);
           });
         }
@@ -214,7 +134,7 @@ var functions = {
   },
 
   projectRoot: process.cwd()
-}
+};
 
 global.config.MAP = "map:" + JSON.stringify(functions.setPresentSettings()) + ",";
 global.config.LINKS = "links:" + JSON.stringify(functions.setPresentLinks()) + ",";
