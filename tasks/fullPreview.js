@@ -31,7 +31,8 @@ module.exports = function() {
       pageres.src(html, ['1024x768'], {
         delay: 0,
         filename: slides[s] + '/' + slides[s] + '-full',
-        format: 'jpg'
+        format: 'jpg',
+        scale: 0.2
       });
     }
 

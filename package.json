@@ -13,7 +13,7 @@
     "gulp-batch": "^1.0.5",
     "gulp-clean": "^0.3.1",
     "gulp-file": "^0.2.0",
-    "gulp-imagemin": "^3.1.0",
+    "gulp-imagemin": "^3.2.0",
     "gulp-jshint": "^2.0.4",
     "gulp-less": "^3.0.5",
     "gulp-newer": "^0.5.1",

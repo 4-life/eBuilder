@@ -205,13 +205,7 @@ module.exports = function() {
 
     gutil.log(gutil.colors.green('Success: update Key Message fields!'));
 
-    // создаем связку презентация-слайд
-    return conn.bulk.load("Clm_Presentation_Slide_vod__c", "insert", Clm_Presentation_Slide_vod__c, function(err, res) {
-      if (err) { throw new Error(err, res); }
-      gutil.log('Try to create Clm_Presentation_Slide_vod__c...');
-    });
-  })
-  .then(function() {
+
     // обновляем связку презентация-слайд
     let query = '';
 
@@ -227,25 +221,35 @@ module.exports = function() {
     });
   })
   .then(function(response) {
-    var data = [];
-
     response = response.searchRecords;
 
-    for(let s in Clm_Presentation_Slide_vod__c) {
-      for(let c in response) {
-        if(Clm_Presentation_Slide_vod__c[s].External_ID_vod__c === response[c].External_ID_vod__c) {
-          data.push({
-            Id: response[c].Id,
-            Display_Order_vod__c: Clm_Presentation_Slide_vod__c[s].Display_Order_vod__c,
-          });
+    if(response.length) {
+      // обновляем связку презентация-слайд
+      gutil.log(gutil.colors.green('Find Clm_Presentation_Slides, update data...'));
+      let data = [];
+      for(let s in Clm_Presentation_Slide_vod__c) {
+        for(let c in response) {
+          if(Clm_Presentation_Slide_vod__c[s].External_ID_vod__c === response[c].External_ID_vod__c) {
+            data.push({
+              Id: response[c].Id,
+              Display_Order_vod__c: Clm_Presentation_Slide_vod__c[s].Display_Order_vod__c,
+            });
+          }
         }
       }
-    }
 
-    return conn.sobject("Clm_Presentation_Slide_vod__c").updateBulk(data, function(err, res) {
-      if (err) throw new Error(err, res);
-      gutil.log(gutil.colors.green('Success: update clm presentation slide'));
-    });
+      return conn.sobject("Clm_Presentation_Slide_vod__c").updateBulk(data, function(err, res) {
+        if (err) throw new Error(err, res);
+        gutil.log(gutil.colors.green('Success: update clm presentation slide'));
+      });
+    }else{
+      // создаем связку презентация-слайд
+      gutil.log(gutil.colors.green('No Clm_Presentation_Slides, creating...'));
+      return conn.bulk.load("Clm_Presentation_Slide_vod__c", "insert", Clm_Presentation_Slide_vod__c, function(err, res) {
+        if (err) { throw new Error(err, res); }
+        gutil.log('Try to create Clm_Presentation_Slide_vod__c...');
+      });
+    }
   })
   .then(function(response) {
     for(var s in response) {
