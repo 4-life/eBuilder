@@ -1,15 +1,19 @@
-const config = global.config,
-  gulp = require('gulp'),
-  imagemin = require('gulp-imagemin'),
-  pngquant = require('imagemin-pngquant'),
-  newer = require('gulp-newer');
+const config = global.config;
+const gulp = require('gulp');
+const imagemin = require('gulp-imagemin');
+const newer = require('gulp-newer');
+const pngquant = require('imagemin-pngquant');
 
 module.exports = function() {
   return gulp.src(config.sourceDir + 'img/**/*.{png,jpeg,jpg}')
     .pipe(newer(config.tempDir + 'img'))
-    .pipe(imagemin({
+    .pipe(imagemin([
+        imagemin.jpegtran({progressive: true, arithmetic: true}),
+        pngquant({quality:60}),
+      ],{
+      verbose: true,
       progressive: true,
-      use: [pngquant()]
+      interlaced: true,
     }))
     .pipe(gulp.dest(config.tempDir + 'img'));
 };
