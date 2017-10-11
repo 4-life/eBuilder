@@ -40,10 +40,9 @@
           });
         };
 
-        // событие перехода на слайд. В данном случае для двух платформ
+        // событие перехода на слайд
         this.goToSlide = function(slide) {
           com.veeva.clm.gotoSlide(slide + '.zip', present);
-          //$LEAP.slideName(slide);
         };
 
       },

@@ -6,6 +6,7 @@ module.exports = {
     nl_PID: 'nl_PID', // индекс nestline
     presentPrefix: 'P', // первый символ в названии презентации
     slidePrefix: 'S', // первый символ в названии всех слайдов
+    customPresentationId: false, // если требуется специальный идентификатор презентации отличный от ее названия
     hidden: false, // видимость презентации в veeva
     approved: true, // если true - презентация обновится на ipad, иначе нет
     groups: '[RU_Brand_Team],[CV_RU]', // Groups
@@ -28,6 +29,9 @@ module.exports = {
     map: {
       "1": {
         "slides": [1, 2, 3, 4, 5]
+      },
+      "2": {
+        "slides": [1]
       }
     },
 
