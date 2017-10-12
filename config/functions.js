@@ -11,11 +11,15 @@ var functions = {
 
   getCurNamePresentation: function(n) {
     var p = global.config.presentation;
-
-    if(!p) return '';
+    var custom = p.customPresentationId;
 
     if (!n) n = Object.keys(global.config.settings.map)[0];
-    return p.presentPrefix + n + "_" + p.nl_PID + "_" + p.brand + "_" + p.lang;
+
+    if (n === Object.keys(global.config.settings.map)[0] && custom) {
+      return custom;
+    } else {
+      return p.presentPrefix + n + "_" + p.nl_PID + "_" + p.brand + "_" + p.lang;
+    }
   },
 
   getCurPresentation: function(s) {
