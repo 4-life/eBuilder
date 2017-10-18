@@ -15,8 +15,8 @@ var functions = {
 
     if (!n) n = Object.keys(global.config.settings.map)[0];
 
-    if (n === Object.keys(global.config.settings.map)[0] && custom && custom.length) {
-      return global.config.presentation.customPresentationId;
+    if (n === Object.keys(global.config.settings.map)[0] && custom) {
+      return custom;
     } else {
       return p.presentPrefix + n + "_" + p.nl_PID + "_" + p.brand + "_" + p.lang;
     }

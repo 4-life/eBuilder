@@ -90,6 +90,10 @@ module.exports = function() {
         gutil.log(gutil.colors.grey('Org ID: ' + userInfo.organizationId));
 
         // смотрим есть ли такая преза
+        if(name.indexOf('/') >= 0) {
+          return reject(new Error('Prohibited character in the presentation name: "/"'));
+        }
+        name = name.replace(/-/g, '\\-');
         conn.search("FIND {"+name+"} IN ALL FIELDS RETURNING Clm_Presentation_vod__c(Id, Name)",
           function(err, res) {
             if (err) { return reject(new Error(err)); }
@@ -157,25 +161,40 @@ module.exports = function() {
     // получаем список слайдов и их id
     if(!response.success) throw new Error(JSON.stringify(response));
 
-    let query = '';
+    let query = [];
 
     for(let i in Key_Message) {
-      query += Key_Message[i].Name + ' OR ';
+      query.push(Key_Message[i].Name);
     }
 
-    query = query.slice(0, -4);
+    var q = "SELECT Id, Name, Media_File_Name_vod__c FROM Key_Message_vod__c WHERE Name = '" + query.join("' OR Name = '") + "'";
 
-    return conn.search("FIND {" + query + "} IN ALL FIELDS RETURNING Key_Message_vod__c(Id, Name)", function(err, res) {
-      if(err) throw new Error(err, res);
-      gutil.log('Try to find Key_Message_vod__c fields...');
+    var p1 = new Promise((resolve) => {
+        conn.query(q).then(function(response) {
+            resolve(response);
+        });
     });
+
+    return Promise.all([p1]);
   })
   .then(function(response) {
+    response = response[0];
+    if(!response) {
+        throw new Error('Key_Messages is missing in salesforce');
+    }
+
+    if(Key_Message.length !== response.records.length) {
+      throw new Error('Current presentation has ' + Key_Message.length + ' slides, but salesforce returned ' + response.records.length + ' slides! Remove unnecessary slides from salesforce or add missing');
+    }
+
     // обновляем поля слайдов
     for(let a in Key_Message) {
-      for(let b in response.searchRecords) {
-        if(Key_Message[a].Name === response.searchRecords[b].Name) {
-          Key_Message[a].Id = response.searchRecords[b].Id;
+      for(let b in response.records) {
+        if(!response.records[b].Media_File_Name_vod__c) {
+            throw new Error('Key_Message ' + response.records[b].Name + ' has no zip data!');
+        }
+        if(Key_Message[a].Name === response.records[b].Name) {
+          Key_Message[a].Id = response.records[b].Id;
           Key_Message[a].Detail_Group_vod__c = Detail_Group_vod__c.Id;
           Key_Message[a].Product_vod__c = Product_vod__c.Id;
         }
@@ -185,9 +204,9 @@ module.exports = function() {
     for(let c in Clm_Presentation_Slide_vod__c) {
       Clm_Presentation_Slide_vod__c[c].Clm_Presentation_vod__c = Clm_Presentation[0].Id;
 
-      for(let b in response.searchRecords) {
-        if(Clm_Presentation_Slide_vod__c[c].Key_Message_vod__c === response.searchRecords[b].Name) {
-          Clm_Presentation_Slide_vod__c[c].Key_Message_vod__c = response.searchRecords[b].Id;
+      for(let b in response.records) {
+        if(Clm_Presentation_Slide_vod__c[c].Key_Message_vod__c === response.records[b].Name) {
+          Clm_Presentation_Slide_vod__c[c].Key_Message_vod__c = response.records[b].Id;
         }
       }
     }
@@ -200,30 +219,26 @@ module.exports = function() {
   })
   .then(function(response) {
     for(var s in response) {
-      if(!response[s].success) throw new Error('Key message is missing in salesforce');
+      if(!response[s].success) throw new Error('Error with Key message: ' + response[s].errors.join('; '));
     }
 
     gutil.log(gutil.colors.green('Success: update Key Message fields!'));
 
-
     // обновляем связку презентация-слайд
-    let query = '';
+    var q = "SELECT Id, Name, External_ID_vod__c FROM Clm_Presentation_Slide_vod__c WHERE Clm_Presentation_vod__c = '" + Clm_Presentation[0].Id + "'";
 
-    for(let i in Key_Message) {
-      query += Key_Message[i].Name + ' OR ';
-    }
-
-    query = query.slice(0, -4);
-
-    return conn.search("FIND {" + query + "} IN ALL FIELDS RETURNING Clm_Presentation_Slide_vod__c(Id, Name, External_ID_vod__c)", function(err, res) {
-      if(err) throw new Error(err, res);
-      gutil.log('Try to find Clm_Presentation_Slide_vod__c...');
+    var q1 = new Promise((resolve) => {
+        conn.query(q).then(function(res) {
+            resolve(res);
+        });
     });
+
+    return Promise.all([q1]);
   })
   .then(function(response) {
-    response = response.searchRecords;
+    response = response && response[0].records;
 
-    if(response.length) {
+    if(response) {
       // обновляем связку презентация-слайд
       gutil.log(gutil.colors.green('Find Clm_Presentation_Slides, update data...'));
       let data = [];
