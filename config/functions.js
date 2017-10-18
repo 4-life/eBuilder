@@ -11,11 +11,15 @@ var functions = {
 
   getCurNamePresentation: function(n) {
     var p = global.config.presentation;
-
-    if(!p) return '';
+    var custom = p.customPresentationId;
 
     if (!n) n = Object.keys(global.config.settings.map)[0];
-    return p.presentPrefix + n + "_" + p.nl_PID + "_" + p.brand + "_" + p.lang;
+
+    if (n === Object.keys(global.config.settings.map)[0] && custom && custom.length) {
+      return global.config.presentation.customPresentationId;
+    } else {
+      return p.presentPrefix + n + "_" + p.nl_PID + "_" + p.brand + "_" + p.lang;
+    }
   },
 
   getCurPresentation: function(s) {
@@ -31,7 +35,7 @@ var functions = {
     var obj = {};
     var p = global.config.settings;
 
-    if(!p) return '';
+    if (!p) return '';
 
     for (var e in p.map) {
       obj[functions.getCurNamePresentation(e)] = functions.getObjData(p.map[e]);
@@ -44,7 +48,7 @@ var functions = {
       p = global.config.settings,
       s = global.config.slides;
 
-    if(!p) return '';
+    if (!p) return '';
 
     for (var e in p.links) {
       newLinks.push({
