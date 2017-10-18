@@ -90,10 +90,7 @@ module.exports = function() {
         gutil.log(gutil.colors.grey('Org ID: ' + userInfo.organizationId));
 
         // смотрим есть ли такая преза
-        if(name.indexOf('/') >= 0) {
-          return reject(new Error('Prohibited character in the presentation name: "/"'));
-        }
-        name = name.replace(/-/g, '\\-');
+        name = name.replace(/-/g, '\\-').replace(/\//g, '\/');
         conn.search("FIND {"+name+"} IN ALL FIELDS RETURNING Clm_Presentation_vod__c(Id, Name)",
           function(err, res) {
             if (err) { return reject(new Error(err)); }
