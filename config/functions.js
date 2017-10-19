@@ -11,14 +11,18 @@ var functions = {
 
   getCurNamePresentation: function(n) {
     var p = global.config.presentation;
-    var custom = p.customPresentationId;
 
     if (!n) n = Object.keys(global.config.settings.map)[0];
 
-    if (n === Object.keys(global.config.settings.map)[0] && custom) {
-      return custom;
+    return p.presentPrefix + n + "_" + p.nl_PID + "_" + p.brand + "_" + p.lang;
+  },
+
+  getCustomIdPresentation: function(id) {
+    const customId = global.config.presentation.customPresentationId;
+    if (id && Object.keys(global.config.settings.map)[0] === id && customId) {
+      return customId;
     } else {
-      return p.presentPrefix + n + "_" + p.nl_PID + "_" + p.brand + "_" + p.lang;
+      return this.getCurNamePresentation(id);
     }
   },
 
@@ -26,7 +30,7 @@ var functions = {
     for (var i in global.config.settings.map) {
       var obj = global.config.settings.map[i].slides;
       if (obj.indexOf(s) >= 0) {
-        return functions.getCurNamePresentation(i);
+        return functions.getCustomIdPresentation(i);
       }
     }
   },
@@ -38,7 +42,11 @@ var functions = {
     if (!p) return '';
 
     for (var e in p.map) {
-      obj[functions.getCurNamePresentation(e)] = functions.getObjData(p.map[e]);
+      if (Object.keys(p.map)[0] === e) {
+        obj[this.getCustomIdPresentation(e)] = functions.getObjData(p.map[e]);
+      } else {
+        obj[functions.getCurNamePresentation(e)] = functions.getObjData(p.map[e]);
+      }
     }
     return obj;
   },
@@ -54,7 +62,7 @@ var functions = {
       newLinks.push({
         class: p.links[e].class,
         slideTo: functions.getCurNameSlide(p.links[e].slideTo),
-        presentTo: functions.getCurNamePresentation(p.links[e].presentTo)
+        presentTo: functions.getCustomIdPresentation(p.links[e].presentTo)
       });
     }
     for (var e in s) {
@@ -75,7 +83,7 @@ var functions = {
       return p;
     }, []);
     newObj["p_slide"] = obj.p_slide ? functions.getCurNameSlide(obj.p_slide) : "";
-    newObj["p_pres"] = obj.p_pres ? functions.getCurNamePresentation(obj.p_pres) : "";
+    newObj["p_pres"] = obj.p_pres ? functions.getCustomIdPresentation(obj.p_pres) : "";
     return newObj;
   },
 
@@ -84,7 +92,6 @@ var functions = {
     for (var e in functions.referenceData) {
       if (functions.referenceData[e].brand == brand) {
         return functions.referenceData[e].detailGroup;
-        break;
       }
     }
   },
@@ -94,7 +101,6 @@ var functions = {
     for (var e in functions.referenceData) {
       if (functions.referenceData[e].brand == brand) {
         return functions.referenceData[e].groups;
-        break;
       }
     }
   },
@@ -143,7 +149,7 @@ var functions = {
 global.config.MAP = "map:" + JSON.stringify(functions.setPresentSettings()) + ",";
 global.config.LINKS = "links:" + JSON.stringify(functions.setPresentLinks()) + ",";
 global.config.readyBDir = path.join('_build', functions.getCurNamePresentation(), '/');
-global.config.tempDir = path.join('_build', "._temp_" + functions.getCurNamePresentation(""), '/');
+global.config.tempDir = path.join('.tmp', "._temp_" + functions.getCurNamePresentation(), '/');
 global.config.sourceDir = path.join(global.config.sourceDir || '.tmp', '/');
 
 module.exports = functions;

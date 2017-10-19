@@ -39,7 +39,7 @@ module.exports = function() {
     "Name": name,
     "Hidden_vod__c": hidden,
     "Approved_vod__c": approved,
-    "Presentation_Id_vod__c": name,
+    "Presentation_Id_vod__c": config.presentation.customPresentationId || name,
     "Country_Code_AZ__c": lang
   }];
 
@@ -121,7 +121,7 @@ module.exports = function() {
   })
   .then(function(response) {
     // ищем id продукта и детэйл групп
-    if(!response.searchRecords.length) throw new Error('Products ' + Product_vod__c.Name + ' or ' + Detail_Group_vod__c.Name + ' is not defined in salesforce!');
+    if(!response.searchRecords.length) throw new Error('Product_vod__c or Detail_Group_vod__c is not defined in salesforce!');
 
     for (let prod in response.searchRecords) {
       if(response.searchRecords[prod].Name === Product_vod__c.Name) {
@@ -235,7 +235,7 @@ module.exports = function() {
   .then(function(response) {
     response = response && response[0].records;
 
-    if(response) {
+    if(response.length) {
       // обновляем связку презентация-слайд
       gutil.log(gutil.colors.green('Find Clm_Presentation_Slides, update data...'));
       let data = [];
