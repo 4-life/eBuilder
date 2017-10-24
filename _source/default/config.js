@@ -13,6 +13,15 @@ module.exports = {
     detailGroup: 'CV_RU', // Detail Group
     disableActions: 'Navigation_Bar_vod; Swipe_vod; History_Buttons_vod; Rotation_Lock_vod; Zoom_vod; Pinch_To_Exit_vod;' // отключенные события в ipad
   },
+
+  // Специальные настройки для BMS
+  bms: {
+    shortbrand: '',
+    materialType: '',
+    audience: '',
+    purpose: ''
+  },
+
   slides: [
     {num: 1},
     {num: 2},
