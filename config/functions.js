@@ -9,7 +9,7 @@ var functions = {
     var bms = global.config.bms;
 
     if (bms) {
-      return p.presentPrefix + "_" + bms.shortbrand + "_" + bms.audience + p.nl_PID + "_" + bms.materialType + "_" + p.slidePrefix + n + "__" + p.lang + "_" + p.lang;
+      return p.presentPrefix + "_" + bms.shortbrand + "_" + bms.audience + p.nl_PID + "_" + bms.materialType + "_" + p.slidePrefix + n + "__" + p.lang;
     }
 
     return p.slidePrefix + n + "_" + p.nl_PID + "_" + p.brand + "_" + p.lang;
@@ -22,7 +22,7 @@ var functions = {
     if (!n) n = Object.keys(global.config.settings.map)[0];
 
     if (bms) {
-      return p.presentPrefix + n + "_" + p.brand + "_" + bms.audience + p.nl_PID + "_" + bms.materialType + "_" + bms.purpose + "_" + p.lang + "_" + p.lang;
+      return p.presentPrefix + "_" + p.brand + "_" + bms.audience + p.nl_PID + "_" + bms.materialType + "_" + bms.purpose + "_" + p.lang;
     }
 
     return p.presentPrefix + n + "_" + p.nl_PID + "_" + p.brand + "_" + p.lang;
