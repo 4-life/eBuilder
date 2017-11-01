@@ -120,6 +120,7 @@ gulp.task('ftpzip',           require('./tasks/ftpzip'));
 gulp.task('ftpctl',           require('./tasks/ftpctl'));
 gulp.task('clean',            require('./tasks/clean'));
 gulp.task('createpresent',    require('./tasks/createPresent'));
+gulp.task('excel',            require('./tasks/descriptionToExcel'));
 gulp.task('help',             require('./tasks/help'));
 
 gulp.task('prepareImgCommonRelease', require('./tasks/prepareImgCommonRelease'));

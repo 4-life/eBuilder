@@ -37,6 +37,7 @@
   "homepage": "https://github.com/4-life/eBuilder#readme",
   "main": "gulpfile.js",
   "dependencies": {
-    "jsforce": "^1.7.1"
+    "jsforce": "^1.7.1",
+    "json2csv": "^3.11.5"
   }
 }
