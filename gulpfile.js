@@ -86,11 +86,6 @@ gulp.task('build', () => {
   runSequence('prepareImgCommon', 'buildImgCommon', 'prepareImgCustom', 'buildImgCustom', 'prepareCSS', 'buildCSS', 'prepareHTML', 'buildHTML', 'prepareJS', 'buildJS', 'prepareLibJS', 'buildLibJS', 'prepareAssets', 'buildAssets', 'slidesList');
 });
 
-gulp.task('release', () => {
-  gutil.log(gutil.colors.magenta('Start RELEASE build ' + gutil.colors.blue(config.presentation.brand + '_' + config.presentation.nl_PID) + ' presentation'));
-  runSequence('clean', 'prepareImgCommonRelease', 'buildImgCommon', 'prepareImgCustomRelease', 'buildImgCustom', 'prepareCSS', 'buildCSS', 'prepareHTML', 'buildHTML', 'prepareJS', 'buildJS', 'prepareLibJS', 'buildLibJS', 'prepareAssets', 'buildAssets', 'slidesList');
-});
-
 gulp.task('upload', () => {
   return runSequence('zip', 'ctl', 'ftpzip', 'ftpctl', function() {gutil.log('Task upload is done');});
 });
@@ -121,9 +116,7 @@ gulp.task('ftpctl',           require('./tasks/ftpctl'));
 gulp.task('clean',            require('./tasks/clean'));
 gulp.task('createpresent',    require('./tasks/createPresent'));
 gulp.task('excel',            require('./tasks/descriptionToExcel'));
+gulp.task('imagemin',         require('./tasks/imagemin'));
 gulp.task('help',             require('./tasks/help'));
-
-gulp.task('prepareImgCommonRelease', require('./tasks/prepareImgCommonRelease'));
-gulp.task('prepareImgCustomRelease', require('./tasks/prepareImgCustomRelease'));
 
 gulp.task('default', ['prepare']);
