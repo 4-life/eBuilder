@@ -11,7 +11,8 @@ module.exports = {
     approved: true, // если true - презентация обновится на ipad, иначе нет
     groups: '[RU_Brand_Team],[CV_RU]', // Groups
     detailGroup: 'CV_RU', // Detail Group
-    disableActions: 'Navigation_Bar_vod; Swipe_vod; History_Buttons_vod; Rotation_Lock_vod; Zoom_vod; Pinch_To_Exit_vod;' // отключенные события в ipad
+    disableActions: 'Navigation_Bar_vod; Swipe_vod; History_Buttons_vod; Rotation_Lock_vod; Zoom_vod; Pinch_To_Exit_vod;', // отключенные события в ipad
+    slidePostfix: '' // Если требуется в конце названия слайда отобразить, например, дату
   },
 
   // Специальные настройки для BMS

@@ -12,7 +12,7 @@ var functions = {
       return p.presentPrefix + "_" + bms.shortbrand + "_" + bms.audience + p.nl_PID + "_" + bms.materialType + "_" + p.slidePrefix + n + "__" + p.lang;
     }
 
-    return p.slidePrefix + n + "_" + p.nl_PID + "_" + p.brand + "_" + p.lang;
+    return p.slidePrefix + n + "_" + p.nl_PID + "_" + p.brand + "_" + p.lang + p.slidePostfix;
   },
 
   getCurNamePresentation: function(n) {

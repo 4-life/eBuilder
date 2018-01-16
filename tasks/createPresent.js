@@ -24,7 +24,7 @@ module.exports = function() {
     slides = config.slides;
     name = functions.getCurNamePresentation();
     hidden = config.presentation.hidden;
-    product = config.presentation.brand + '_' + config.presentation.lang;
+    product = config.presentation.brand + (config.presentation.lang ? '_' + config.presentation.lang : '');
     lang = config.presentation.lang;
     approved = config.presentation.approved;
     groups = config.presentation.groups;
@@ -115,7 +115,10 @@ module.exports = function() {
     // ищем id нужного бренда
     console.log('Searching id for product: ' + Product_vod__c.Name);
 
-    return conn.search("FIND {" + Product_vod__c.Name + " OR " + Detail_Group_vod__c.Name + "} IN ALL FIELDS RETURNING Product_vod__c(Id, Name)", function(err, res) {
+    const product = Product_vod__c.Name.replace(/-/g, '\\-').replace(/\//g, '\/');
+    const group = Detail_Group_vod__c.Name.replace(/-/g, '\\-').replace(/\//g, '\/');
+
+    return conn.search("FIND {" + product + " OR " + group + "} IN ALL FIELDS RETURNING Product_vod__c(Id, Name)", function(err, res) {
       if(err) throw new Error(err, res);
     });
   })
